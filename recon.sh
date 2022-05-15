@@ -80,9 +80,9 @@ Find_Web_Technologies
 scanner(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/cves/ -c 50 -o /root/recon/$domain/scan/nuclei/new-cves.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -c 50 -o /root/recon/$domain/nuclei/scan/new-vulnerabilities.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/technologies/ -c 50 -o /root/recon/$domain/scan/nuclei/new-technologies.txt
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/cves/ -c 50 -o /root/recon/$domain/scan/nuclei/new-cves.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -c 50 -o /root/recon/$domain/nuclei/scan/new-vulnerabilities.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/technologies/ -c 50 -o /root/recon/$domain/scan/nuclei/technologies.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/My-Nuclei-Templates/ -o /root/recon/$domain/scan/nuclei/My-Nuclei-Templates.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/Nuclei 1/ -o /root/recon/$domain/scan/nuclei/Nuclei.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t  nuclei -t /root/nuclei-templates/workflows/ -o /root/recon/$domain/scan/nuclei/workflows.txt -v
@@ -150,8 +150,6 @@ LFI(){
 for domain in $(cat $host);
 do
 cat /root/recon/$domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt -of csv -o $domain/vulnerabilities/LFI/lfi.txt -t 50 -c  ; done
-}
-menu(){
 done
 }
 LFI
