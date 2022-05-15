@@ -37,14 +37,6 @@ done
 }
 open_port
 
-php_info(){
-for domain in $(cat $host);
-do
-cat sub.txt | httpx -path /phpinfo.php -status-code -content-length -title > /root/recon/$domain/scan/php.txt
-done
-}
-php_info
-
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
@@ -53,13 +45,6 @@ done
 }
 Subdomai_takeover
 
-web_Screenshot(){
-for domain in $(cat $host);
-do
-gowitness file -f /root/recon/$domain/subdomain/good/active_subdomain.txt
-done
-}
-web_Screenshot
 
 CloudFlare_Checker(){
 for domain in $(cat $host);
@@ -69,13 +54,6 @@ done
 }
 CloudFlare_Checker
 
-Find_Web_Technologies(){
-for domain in $(cat $host);
-do
-python3 /root/OK-VPS/tools/wappalyzer-cli/src/wappy -f /root/recon/$domain/subdomain/good/active_subdomain.txt > /root/recon/$domain/scan/new-technologies.txt
-done
-}
-Find_Web_Technologies
 
 scanner(){
 for domain in $(cat $host);
@@ -146,13 +124,13 @@ done
 }
 SQL
 
-LFI(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt -of csv -o $domain/vulnerabilities/LFI/lfi.txt -t 50 -c  ; done
-done
-}
-LFI
+#LFI(){
+#for domain in $(cat $host);
+#do
+#cat /root/recon/$domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt -of csv -o $domain/vulnerabilities/LFI/lfi.txt -t 50 -c  ; done
+#done
+#}
+#LFI
 
 Git_dork(){
 for domain in $(cat $host);
