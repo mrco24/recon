@@ -37,10 +37,18 @@ done
 }
 open_port
 
+web_Screenshot(){
+for domain in $(cat $host);
+do
+gowitness file -f /root/recon/$domain/subdomain/good/active_subdomain.txt
+done
+}
+web_Screenshot
+
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-subzy -targets /root/recon/$domain/subdomain/good/active_subdomain.txt > /root/recon/$domain/Subomain-Takeover/poc.txt
+subzy -targets /root/recon/$domain/subdomain/good/finalsub.txt > /root/recon/$domain/Subomain-Takeover/poc.txt
 done
 }
 Subdomai_takeover
@@ -124,13 +132,13 @@ done
 }
 SQL
 
-#LFI(){
-#for domain in $(cat $host);
-#do
-#cat /root/recon/$domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w ~/tools/lfipayloads.txt -of csv -o $domain/vulnerabilities/LFI/lfi.txt -t 50 -c  ; done
-#done
-#}
-#LFI
+LFI(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w /root/wordlist/lfi.txt -of csv -o /root/recon/$domain/scan/nuclei/lfi.txt -t 50 -c  ; done
+done
+}
+LFI
 
 Git_dork(){
 for domain in $(cat $host);
