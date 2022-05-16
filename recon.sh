@@ -66,9 +66,9 @@ CloudFlare_Checker
 scanner(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/cves/ -c 50 -o /root/recon/$domain/scan/nuclei/new-cves.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/vulnerabilities/ -c 50 -o /root/recon/$domain/nuclei/scan/new-vulnerabilities.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/technologies/ -c 50 -o /root/recon/$domain/scan/nuclei/technologies.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/cves/  -o /root/recon/$domain/scan/nuclei/new-cves.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/vulnerabilities/  -o /root/recon/$domain/nuclei/scan/new-vulnerabilities.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/technologies/  -o /root/recon/$domain/scan/nuclei/technologies.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/My-Nuclei-Templates/ -o /root/recon/$domain/scan/nuclei/My-Nuclei-Templates.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/Nuclei 1/ -o /root/recon/$domain/scan/nuclei/Nuclei.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t  nuclei -t /root/nuclei-templates/workflows/ -o /root/recon/$domain/scan/nuclei/workflows.txt -v
