@@ -127,24 +127,8 @@ Refactors_xss
 SQL(){
 for domain in $(cat $host);
 do
-sqlmap -m /root/recon/$domain/gf/sqli.txt --batch --random-agent --level 1 | tee /root/recon/$domain/SQL/sqlpoc.txt -v
+cat /root/recon/$domain/gf/sqli.txt | nuclei -t /root/nuclei-templates/My-Nuclei-Templates/SQL/SQLInjection_ERROR.yaml -o sqlpoc.txt -v
 done
 }
 SQL
 
-LFI(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/gf/lfi.txt | qsreplace FUZZ | while read url ; do ffuf -u $url -mr "root:x" -w /root/wordlist/lfi.txt -of csv -o /root/recon/$domain/scan/nuclei/lfi.txt -t 50 -c  ; done
-done
-}
-LFI
-
-Git_dork(){
-for domain in $(cat $host);
-do
-export GITHUB_TOKEN=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
-python3 /root/Okvps/tools/GitDorker/GitDorker.py -tf /root/Okvps/tools/GitDorker/token.txt -q $domain -d /root/Okvps/tools/GitDorker/Dorks/medium_dorks.txt -o /root/recon/$domain/git_dork/medium_dorks.txt
-done
-}
-Git_dork
