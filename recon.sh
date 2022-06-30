@@ -97,7 +97,15 @@ Get_js(){
 for domain in $(cat $host);
 do
 cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/getjs_urls.txt
-cat /root/recon/$domain/url/valid_urls.tx | grep '\.js$' | httpx -status-code -mc 200 -content-type | grep 'application/javascript' | tee /root/recon/$domain/js_url/jshttpxurl.txt
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/Domain_js_urls.txt
+cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
+cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
+cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 200 -o /root/recon/$domain/js_url/jshttpxurl.txt
+#relative-url-extractor https://github.com/jobertabma/relative-url-extractor
+#LinkFinder https://github.com/GerbenJavado/LinkFinder
+#SecretFinder https://github.com/m4ll0k/SecretFinder
+#Arjun https://github.com/s0md3v/Arjun
+
 done
 }
 Get_js
