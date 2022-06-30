@@ -96,7 +96,7 @@ find_urls
 Get_js(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | tee /root/recon/$domain/js_url/getjs_urls.txt
+cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/getjs_urls.txt
 cat /root/recon/$domain/url/valid_urls.tx | grep '\.js$' | httpx -status-code -mc 200 -content-type | grep 'application/javascript' | tee /root/recon/$domain/js_url/jshttpxurl.txt
 done
 }
