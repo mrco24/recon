@@ -101,7 +101,7 @@ cat /root/recon/$domain/subdomain/good/active_subdomain.txt | getJS --complete |
 cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
 cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
 cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 200 -o /root/recon/$domain/js_url/jshttpxurl.txt
-#jsscan https://gist.github.com/savirsuda/a46df32289d2ddac3fc1331824078af0
+/root/Tools/JSScanner/./script.sh /root/recon/$domain/js_url/jshttpxurl.txt
 #relative-url-extractor https://github.com/jobertabma/relative-url-extractor
 #LinkFinder https://github.com/GerbenJavado/LinkFinder
 #SecretFinder https://github.com/m4ll0k/SecretFinder
