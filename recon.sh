@@ -48,7 +48,7 @@ web_Screenshot
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-subzy -targets /root/recon/$domain/subdomain/good/finalsub.txt > /root/recon/$domain/Subomain-Takeover/poc.txt
+subzy -targets /root/recon/$domain/subdomain/good/finalsub.txt --concurrency  20 --hide_files > /root/recon/$domain/Subomain-Takeover/poc.txt
 done
 }
 Subdomai_takeover
