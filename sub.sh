@@ -12,8 +12,9 @@ mkdir -p /root/recon/$domain/subdomain /root/recon/$domain/subdomain/good /root/
 subfinder -d $domain -o /root/recon/$domain/subdomain/subfinder.txt
 assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.txt 
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
-sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
+#sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
+chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 python3 /root/OK-VPS/tools/github-search/github-subdomains.py -t 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 -d $domain > /root/recon/$domain/subdomain/gitsub.txt
 curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u | tee /root/recon/$domain/subdomain/crtsub.txt
 curl -s "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u | tee /root/recon/$domain/subdomain/riddlersub.txt
