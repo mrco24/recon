@@ -62,7 +62,13 @@ done
 }
 CloudFlare_Checker
 
-
+Fuzz(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/cloudflare_check.txt
+done
+}
+Fuzz
 scanner(){
 for domain in $(cat $host);
 do
