@@ -74,6 +74,10 @@ cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nu
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t  nuclei -t /root/nuclei-templates/workflows/ -o /root/recon/$domain/scan/nuclei/workflows.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/helpers/ -o /root/recon/$domain/scan/nuclei/helpers.txt -v
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/idscan/ -o /root/recon/$domain/scan/nuclei/idscan.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/new-nuclei/cves/ -o /root/recon/$domain/scan/new-nuclei/cve.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/new-nucleis/vulnerabilities/  -o /root/recon/$domain/vulnerabilities.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/new-nuclei/takeovers/ -o /root/recon/$domain/takover.txt -v
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/new-nuclei/technologies/ -o /root/recon/$domain/te.txt -vchnologies.txt -v
 done
 }
 scanner
