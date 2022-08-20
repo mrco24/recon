@@ -127,6 +127,7 @@ do
 gf xss /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/xss.txt
 gf sqli /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/sqli.txt
 gf lfi /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/lfi.txt
+gf redirect /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/redirect.txt
 done
 }
 gf_patterns
