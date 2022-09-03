@@ -152,3 +152,10 @@ done
 }
 SQL
 
+FUZZ(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dirsearch --stdin 
+done
+}
+FUZZ
