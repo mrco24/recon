@@ -14,6 +14,7 @@ assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.t
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
+amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub/passive.txt
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 python3 /root/OK-VPS/tools/github-search/github-subdomains.py -t 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 -d $domain > /root/recon/$domain/subdomain/gitsub.txt
 curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee web.archive.txt
