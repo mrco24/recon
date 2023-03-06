@@ -40,20 +40,29 @@ resolving_domains(){
 for domain in $(cat $host);
 do
 massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
-cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/final_sub.txt
-cp /root/recon/$domain/subdomain/final_sub.txt /root/recon/$domain/subdomain/good
-#shuffledns -d /root/recon/$domain/subdomain/all_srot_sub.txt -r /root/wordlist/resolvers.txt -o  /root/recon/$domain/subdomain/good/final_sub.txt
+cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/resolving_live_sub.txt
+cp /root/recon/$domain/subdomain/resolving_live_sub.txt /root/recon/$domain/subdomain/good
+#shuffledns -d /root/recon/$domain/subdomain/all_srot_sub.txt -r /root/wordlist/resolvers.txt -o  /root/recon/$domain/subdomain/good/resolving_live_sub.txt
 done
 }
 resolving_domains
 
+brut(){
+for domain in $(cat $host);
+do
+cp brut.sh /root/recon/$domain/subdomain/good
+cd /root/recon/$domain/subdomain/good
+./brut.sh pasiv_resolving_live_sub.txt
+done
+}
+brut
 
 Recursive(){
 for domain in $(cat $host);
 do
 cp Recursive.sh /root/recon/$domain/subdomain/good
 cd /root/recon/$domain/subdomain/good
-./Recursive.sh final_sub.txt
+./Recursive.sh resolving_live_sub.txt
 done
 }
 Recursive
