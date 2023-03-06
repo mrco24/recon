@@ -2,7 +2,7 @@
 
 host=$1
 wordlist="/root/wordlist/all.txt"
-resolver="/root/OK-VPS/tools/massdns/lists/resolvers.txt"
+resolver="/root/wordlist/resolvers.txt"
 
 resolving_domains_2(){
 for domain in $(cat $host);
