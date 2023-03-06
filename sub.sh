@@ -1,7 +1,7 @@
 #!/bin/bash
 
 host=$1
-wordlist="/root/wordlist/all.txt"
+wordlist="/root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt"
 resolver="/root/wordlist/resolvers.txt"
 
 domain_enum(){
@@ -27,8 +27,10 @@ N;s/^.*\n//;:a;s/^\( *\)\(.*\), /\1\2\n\1/;ta;p;q; }' < <(
 openssl x509 -noout -text -in <(
 openssl s_client -ign_eof 2>/dev/null <<<$'HEAD / HTTP/1.0\r\n\r' \
 -connect $domain:443 ) ) | grep -Po '((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+' | tee /root/recon/$domain/subdomain/altnamesub.txt
+shuffledns -d $domain -w $wordlist -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/shuffledns.txt
 cat /root/recon/$domain/subdomain/*.txt > /root/recon/$domain/subdomain/allsub.txt
 cat /root/recon/$domain/subdomain/allsub.txt | anew -q /root/recon/$domain/subdomain/all_srot_sub.txt
+
 done
 }
 domain_enum
@@ -37,13 +39,13 @@ domain_enum
 resolving_domains(){
 for domain in $(cat $host);
 do
-massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
-cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/final_sub.txt
-cp /root/recon/$domain/subdomain/final_sub.txt /root/recon/$domain/subdomain/good
+#massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
+#cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/final_sub.txt
+#cp /root/recon/$domain/subdomain/final_sub.txt /root/recon/$domain/subdomain/good
+shuffledns -d /root/recon/$domain/subdomain/all_srot_sub.txt -r /root/wordlist/resolvers.txt -o  /root/recon/$domain/subdomain/good/final_sub.txt
 done
 }
 resolving_domains
-
 
 
 Recursive(){
