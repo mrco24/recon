@@ -159,6 +159,15 @@ done
 }
 gf_patterns
 
+SQL(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/gf/sqli.txt | nuclei -t /root/nuclei-templates/My-Nuclei-Templates/SQL/SQLInjection_ERROR.yaml -o sqlpoc.txt -v
+done
+}
+SQL
+
+
 Refactors_xss(){
 for domain in $(cat $host);
 do
@@ -171,12 +180,5 @@ done
 }
 Refactors_xss
 
-SQL(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/gf/sqli.txt | nuclei -t /root/nuclei-templates/My-Nuclei-Templates/SQL/SQLInjection_ERROR.yaml -o sqlpoc.txt -v
-done
-}
-SQL
 
 
