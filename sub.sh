@@ -14,7 +14,7 @@ assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.t
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
-amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub/passive.txt
+amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 python3 /root/OK-VPS/tools/github-search/github-subdomains.py -t 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 -d $domain > /root/recon/$domain/subdomain/gitsub.txt
 curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee web.archive.txt
@@ -52,7 +52,7 @@ for domain in $(cat $host);
 do
 cp brut.sh /root/recon/$domain/subdomain/good
 cd /root/recon/$domain/subdomain/good
-./brut.sh pasiv_resolving_live_sub.txt
+./brut.sh resolving_live_sub.txt
 done
 }
 brut
