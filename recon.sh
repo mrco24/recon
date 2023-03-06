@@ -2,7 +2,7 @@
 
 host=$1
 wordlist="/root/wordlist/all.txt"
-resolver="/root/wordlist/resolvers.txt"
+resolver="/root/OK-VPS/tools/massdns/lists/resolvers.txt"
 
 resolving_domains_2(){
 for domain in $(cat $host);
@@ -65,10 +65,27 @@ CloudFlare_Checker
 Fuzz(){
 for domain in $(cat $host);
 do
-dirsearch -l /root/recon/$domain/subdomain/good/cloudflare_check.txt
+dirsearch -l /root/recon/$domain/subdomain/good/cloudflare_check.txt > /root/recon/$domain/dri/dri_cf.txt
 done
 }
 Fuzz
+
+FUZZ_active(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
+done
+}
+FUZZ_active
+
+FUZZ_ip(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/ip_sub.txt  > /root/recon/$domain/dri/dri_ip.txt
+done
+}
+FUZZ_ip
+
 scanner(){
 for domain in $(cat $host);
 do
@@ -152,10 +169,4 @@ done
 }
 SQL
 
-FUZZ(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dirsearch --stdin 
-done
-}
-FUZZ
+
