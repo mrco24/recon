@@ -7,7 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 resolving_domains_2(){
 for domain in $(cat $host);
 do
-massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns.txt /root/recon/$domain/subdomain/good/finalsub.txt
+massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns.txt /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
 cat /root/recon/$domain/subdomain/good/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/good_sub.txt
 #shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
@@ -49,7 +49,7 @@ web_Screenshot
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-subzy -targets /root/recon/$domain/subdomain/good/finalsub.txt --concurrency  20 --hide_fails > /root/recon/$domain/Subomain-Takeover/poc.txt
+subzy -targets /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt --concurrency  20 --hide_fails > /root/recon/$domain/Subomain-Takeover/poc.txt
 done
 }
 Subdomai_takeover
@@ -113,6 +113,7 @@ cat /root/recon/$domain/subdomain/good/active_subdomain.txt | waybackurls | tee 
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | hakrawler | grep $domain > /root/recon/$domain/url/hakrawler-urls.txt
 gospider -S /root/recon/$domain/subdomain/good/active_subdomain.txt -c 10 -d 1 --other-source | grep $domain | tee /root/recon/$domain/url/gospider-url.txt
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | gau --threads 5 > /root/recon/$domain/url/gau-urls.txt
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | httpx | katana -o /root/recon/$domain/url/katana.txt
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | tee /root/recon/$domain/url/final-url.txt
 cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/valid_urls.txt
@@ -120,6 +121,13 @@ done
 }
 find_urls
 
+SecretFinder(){
+for domain in $(cat $host);
+do
+ python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/Secret_api/SecretFinder.html
+done
+}
+SecretFinder
 
 Get_js(){
 for domain in $(cat $host);
@@ -138,6 +146,7 @@ cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 200 -o /root/rec
 done
 }
 Get_js
+
 
 gf_patterns(){
 for domain in $(cat $host);
