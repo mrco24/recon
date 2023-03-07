@@ -7,7 +7,7 @@ brut(){
 for sub in $(cat $host);
 do
 
-puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/1.txt $sub -r /root/wordlist/resolvers.txt | anew -q /root/recon/indriver.com/subdomain/good/puredns.txt
+puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt $sub -r /root/wordlist/resolvers.txt | anew -q /root/recon/indriver.com/subdomain/good/puredns.txt
 cat *.txt > P_allsub.txt
 cat P_allsub.txt | anew -q puredns_bruteforce_sub.txt
 
