@@ -29,7 +29,7 @@ openssl s_client -ign_eof 2>/dev/null <<<$'HEAD / HTTP/1.0\r\n\r' \
 -connect $domain:443 ) ) | grep -Po '((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+' | tee /root/recon/$domain/subdomain/altnamesub.txt
 #shuffledns -d $domain -w $wordlist -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/shuffledns.txt
 cat /root/recon/$domain/subdomain/*.txt > /root/recon/$domain/subdomain/allsub.txt
-cat /root/recon/$domain/subdomain/allsub.txt | anew -q /root/recon/$domain/subdomain/all_srot_sub.txt
+cat /root/recon/$domain/subdomain/allsub.txt | uniq -u > /root/recon/$domain/subdomain/all_srot_sub.txt
 
 done
 }
