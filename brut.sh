@@ -19,7 +19,7 @@ resolving_domains_2(){
 for sub in $(cat $host);
 do
 
-massdns -r $resolver -t A -o S -w /root/recon/indriver.com/subdomain/good/massdns_2.txt /root/recon/indriver.com/subdomain/good/puredns_finalsub_all.txt
+massdns -r $resolver -t A -o S -w /root/recon/indriver.com/subdomain/good/massdns_2.txt /root/recon/indriver.com/subdomain/good/puredns_bruteforce_sub.txt
 cat /root/recon/indriver.com/subdomain/good/massdns_2.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/indriver.com/subdomain/good/puredns_good_sub.txt
 #shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/puredns_good_sub.txt
 done
