@@ -9,7 +9,7 @@ do
 
 puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/1.txt $sub -r /root/wordlist/resolvers.txt | anew -q /root/recon/indriver.com/subdomain/good/puredns.txt
 cat *.txt > P_allsub.txt
-cat R_allsub.txt | anew -q puredns_bruteforce_sub.txt
+cat P_allsub.txt | anew -q puredns_bruteforce_sub.txt
 
 done
 }
