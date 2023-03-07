@@ -62,7 +62,7 @@ for domain in $(cat $host);
 do
 cp Recursive.sh /root/recon/$domain/subdomain/good
 cd /root/recon/$domain/subdomain/good
-./Recursive.sh resolving_live_sub.txt
+./Recursive.sh puredns_good_sub.txt
 done
 }
 Recursive
