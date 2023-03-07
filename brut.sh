@@ -16,11 +16,13 @@ done
 brut
 
 resolving_domains_2(){
-for domain in $(cat $host);
+for sub in $(cat $host);
 do
-massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns.txt /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
-cat /root/recon/$domain/subdomain/good/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/good_sub.txt
+
+massdns -r $resolver -t A -o S -w /root/recon/indriver.com/subdomain/good/massdns.txt /root/recon/indriver.com/subdomain/good/Recursive_finalsub_all.txt
+cat /root/recon/indriver.com/subdomain/good/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/indriver.com/subdomain/good/good_sub.txt
 #shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/good_sub.txt
+
 done
 }
 resolving_domains_2
