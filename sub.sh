@@ -66,3 +66,12 @@ cd /root/recon/$domain/subdomain/good
 done
 }
 Recursive
+
+recon(){
+for domain in $(cat $host);
+do
+cd /root/recon
+./recon.sh sub.txt
+done
+}
+recon
