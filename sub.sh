@@ -17,7 +17,7 @@ amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
 amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 python3 /root/OK-VPS/tools/github-search/github-subdomains.py -t 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 -d $domain > /root/recon/$domain/subdomain/gitsub.txt
-curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee web.archive.txt
+curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee /root/recon/$domain/subdomain/web.archive.txt
 curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u | tee /root/recon/$domain/subdomain/crtsub.txt
 curl -s "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u | tee /root/recon/$domain/subdomain/riddlersub.txt
 curl -s https://dns.bufferover.run/dns?q=.$domain |jq -r .FDNS_A[]|cut -d',' -f2|sort -u | tee /root/recon/$domain/subdomain/bufferoversub.txt
