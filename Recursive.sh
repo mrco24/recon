@@ -2,7 +2,7 @@
 
 host=$1
 
-Recursive(){
+
 for sub in $(cat $host);
 do
     subfinder -d $sub -all -silent | anew -q passive_recursive.txt
@@ -13,5 +13,4 @@ do
     cat R_allsub.txt | uniq -u > Recursive_finalsub_all.txt
 
 done
-}
-Recursive
+
