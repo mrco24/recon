@@ -17,7 +17,7 @@ resolving_domains_3
 domain_ip(){
 for domain in $(cat $host);
 do
-gf ip /root/recon/$domain/subdomain/good/massdns.txt | sed 's/.*://' > /root/recon/$domain/subdomain/good/ip_sub.txt
+gf ip /root/recon/$domain/subdomain/good/massdns_3.txt | sed 's/.*://' > /root/recon/$domain/subdomain/good/ip_sub.txt
 done
 }
 domain_ip
