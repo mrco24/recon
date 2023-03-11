@@ -59,17 +59,19 @@ resolving_domains
 #brut
 
 Recursive(){
-for domain in $(cat $host);
+for domain in $(cat /root/recon/$host);
 do
-cd /root/recon && cp Recursive.sh /root/recon/$domain/subdomain/good && cd /root/recon/$domain/subdomain/good && ./Recursive.sh passive_resolving_live_sub.txt
+cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/good/
+cd /root/recon/$domain/subdomain/good
+./Recursive.sh passive_resolving_live_sub.txt
 done
 }
 Recursive
 
 recon(){
-for domain in $(cat $host);
+for domain in $(cat /root/recon/$host);
 do
-cd /root/recon && ./recon.sh sub.txt
+cd /root/recon && ./recon.sh /root/recon/$host
 done
 }
 recon
