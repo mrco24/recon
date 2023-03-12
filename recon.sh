@@ -63,29 +63,29 @@ done
 }
 CloudFlare_Checker
 
-Fuzz(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/cloudflare_check.txt > /root/recon/$domain/dri/dri_cf.txt
-done
-}
-Fuzz
+#Fuzz(){
+#for domain in $(cat $host);
+#do
+#dirsearch -l /root/recon/$domain/subdomain/good/cloudflare_check.txt > /root/recon/$domain/dri/dri_cf.txt
+#done
+#}
+#Fuzz
 
-FUZZ_active(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
-done
-}
-FUZZ_active
+#FUZZ_active(){
+#for domain in $(cat $host);
+#do
+#dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
+#done
+#}
+#FUZZ_active
 
-FUZZ_ip(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/ip_sub.txt  > /root/recon/$domain/dri/dri_ip.txt
-done
-}
-FUZZ_ip
+#FUZZ_ip(){
+#for domain in $(cat $host);
+#do
+#dirsearch -l /root/recon/$domain/subdomain/good/ip_sub.txt  > /root/recon/$domain/dri/dri_ip.txt
+#done
+#}
+#FUZZ_ip
 
 scanner(){
 for domain in $(cat $host);
