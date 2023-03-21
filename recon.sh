@@ -49,7 +49,7 @@ web_Screenshot
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-subzy -targets /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt --concurrency  20 --hide_fails > /root/recon/$domain/Subomain-Takeover/poc.txt
+subzy run --targets /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt --concurrency  20 --hide_fails > /root/recon/$domain/Subomain-Takeover/poc.txt
 done
 }
 Subdomai_takeover
