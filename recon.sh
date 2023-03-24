@@ -122,13 +122,13 @@ done
 }
 find_urls
 
-SecretFinder(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/url/final-url.txt | xargs -I@ sh -c 'python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i @' -o /root/recon/$domain/js_url/url_SecretFinder.html
-done
-}
-SecretFinder
+#SecretFinder(){
+#for domain in $(cat $host);
+#do
+#cat /root/recon/$domain/url/final-url.txt | xargs -I@ sh -c 'python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i @' -o /root/recon/$domain/js_url/url_SecretFinder.html
+#done
+#}
+#SecretFinder
 
 Get_js(){
 for domain in $(cat $host);
@@ -150,13 +150,13 @@ done
 Get_js
 
 
-SecretFinder_js(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/js_url/good_js_url.txt | xargs -I@ sh -c 'python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i @' -o /root/recon/$domain/js_url/js_SecretFinder.html
-done
-}
-SecretFinder_js
+#SecretFinder_js(){
+#for domain in $(cat $host);
+#do
+#cat /root/recon/$domain/js_url/good_js_url.txt | xargs -I@ sh -c 'python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i @' -o /root/recon/$domain/js_url/js_SecretFinder.html
+#done
+#}
+#SecretFinder_js
 
 gf_patterns(){
 for domain in $(cat $host);
