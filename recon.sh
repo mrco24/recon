@@ -125,7 +125,7 @@ find_urls
 SecretFinder(){
 for domain in $(cat $host);
 do
- python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/Secret_api/url_SecretFinder.html
+cat /root/recon/$domain/url/final-url.txt | xargs -I@ sh -c 'python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i @' -o /root/recon/$domain/js_url/url_SecretFinder.html
 done
 }
 SecretFinder
@@ -153,7 +153,7 @@ Get_js
 SecretFinder_js(){
 for domain in $(cat $host);
 do
- python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/Secret_api/js_url_SecretFinder.html
+cat /root/recon/$domain/js_url/good_js_url.txt | xargs -I@ sh -c 'python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i @' -o /root/recon/$domain/js_url/js_SecretFinder.html
 done
 }
 SecretFinder_js
