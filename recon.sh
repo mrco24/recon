@@ -130,6 +130,14 @@ find_urls
 #}
 #SecretFinder
 
+scanner(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/url/valid_urls.txt | nuclei -t /root/nuclei-templates/  -o /root/recon/$domain/scan/nuclei/urls_nuclei_scan.txt -v
+done
+}
+find_urls
+
 Get_js(){
 for domain in $(cat $host);
 do
