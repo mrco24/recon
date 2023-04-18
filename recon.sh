@@ -209,7 +209,9 @@ gf_patterns
 SQL(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/gf/sqli.txt | nuclei -t /root/nuclei-templates/My-Nuclei-Templates/SQL/SQLInjection_ERROR.yaml -o sqlpoc.txt -v
+sqlmap -m /root/recon/$domain/gf/sqli.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sql_url.txt
+sqlmap -m /root/recon/$domain/url/valid_urls.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sql_url.txt
+
 done
 }
 SQL
