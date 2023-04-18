@@ -41,6 +41,7 @@ open_port
 web_Screenshot(){
 for domain in $(cat $host);
 do
+cd /root/recon/$domain/Subomain-Screenshots 
 gowitness file -f /root/recon/$domain/subdomain/good/active_subdomain.txt
 done
 }
