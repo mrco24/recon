@@ -4,6 +4,14 @@ host=$1
 wordlist="/root/wordlist/all.txt"
 resolver="/root/wordlist/resolvers.txt"
 
+http_probe_1(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt | httprobe -o  /root/recon/$domain/Subomain-Takeover/httprobe_subdomain.txt 
+done
+}
+http_probe_1
+
 resolving_domains_3(){
 for domain in $(cat $host);
 do
@@ -14,13 +22,13 @@ done
 }
 resolving_domains_3
 
-http_probe(){
+http_probe_2(){
 for domain in $(cat $host);
 do
 cat /root/recon/$domain/subdomain/good/resolv_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
 done
 }
-http_probe
+http_probe_2
 
 Gen_subdomain(){
 for domain in $(cat $host);
@@ -98,7 +106,7 @@ web_Screenshot
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-subzy run --targets /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt --concurrency  20 --hide_fails > /root/recon/$domain/Subomain-Takeover/poc.txt
+nuclei -l /root/recon/$domain/Subomain-Takeover/httprobe_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
 done
 }
 Subdomai_takeover
