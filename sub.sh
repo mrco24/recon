@@ -36,17 +36,17 @@ done
 domain_enum
 
 
-resolving_domains(){
-for domain in $(cat $host);
-do
-massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
-cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/massdns_live_sub.txt
-cd  /root/recon/$domain/subdomain/good
-cat massdns_live_sub.txt | uniq -u > passive_resolving_live_sub.txt
+#resolving_domains(){
+#for domain in $(cat $host);
+#do
+#massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
+#cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/massdns_live_sub.txt
+#cd  /root/recon/$domain/subdomain/good
+#cat massdns_live_sub.txt | uniq -u > passive_resolving_live_sub.txt
 #shuffledns -d /root/recon/$domain/subdomain/all_srot_sub.txt -r /root/wordlist/resolvers.txt -o  /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
-done
-}
-resolving_domains
+#done
+#}
+#resolving_domains
 
 #brut(){
 #for domain in $(cat $host);
@@ -62,8 +62,8 @@ Recursive(){
 for domain in $(cat /root/recon/$host);
 do
 cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/good/
-cd /root/recon/$domain/subdomain/good
-./Recursive.sh passive_resolving_live_sub.txt
+cd /root/recon/$domain/subdomain
+./Recursive.sh all_srot_sub.txt
 done
 }
 Recursive
