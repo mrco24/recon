@@ -25,7 +25,7 @@ http_probe
 Gen_subdomain(){
 for domain in $(cat $host);
 do
-gotator -sub /root/recon/$domain/subdomain/good/httprobe_subdomain.txt -perm words.txt -depth 3 > /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | cat /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | httpx -o /root/recon/$domain/subdomain/good/Gen_sub/httpx_gen_sub.txt
+gotator -sub /root/recon/$domain/subdomain/good/httprobe_subdomain.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 3 > /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | cat /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | httpx -o /root/recon/$domain/subdomain/good/Gen_sub/httpx_gen_sub.txt
 cp /root/recon/$domain/subdomain/good/httprobe_subdomain.txt /root/recon/$domain/subdomain/good/Gen_sub
 cat /root/recon/$domain/subdomain/good/Gen_sub/*.txt > /root/recon/$domain/subdomain/good/Gen_sub/all-gen-sub.txt
 cat /root/recon/$domain/url/all-gen-sub.txt | sort --unique | tee /root/recon/$domain/url/active_subdomain.txt
