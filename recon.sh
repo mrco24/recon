@@ -28,7 +28,7 @@ do
 gotator -sub /root/recon/$domain/subdomain/good/httprobe_subdomain.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 3 > /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | cat /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | httpx -o /root/recon/$domain/subdomain/good/Gen_sub/httpx_gen_sub.txt
 cp /root/recon/$domain/subdomain/good/httprobe_subdomain.txt /root/recon/$domain/subdomain/good/Gen_sub
 cat /root/recon/$domain/subdomain/good/Gen_sub/*.txt > /root/recon/$domain/subdomain/good/Gen_sub/all-gen-sub.txt
-cat /root/recon/$domain/url/all-gen-sub.txt | sort --unique | tee /root/recon/$domain/url/active_subdomain.txt
+cat /root/recon/$domain/subdomain/good/Gen_sub/all-gen-sub.txt | sort --unique | tee /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt
 done
 }
 Gen_subdomain
@@ -44,7 +44,7 @@ domain_ip
 Special_subdomain(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | anew /root/recon/$domain/Special_subdomain/Special_subdomain.txt 
+cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | anew /root/recon/$domain/Special_subdomain/Special_subdomain.txt 
 done
 }
 Special_subdomain
@@ -52,7 +52,7 @@ Special_subdomain
 Special_subdomain_scanner(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/cves/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-cves.txt -v
+cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/cves/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-cves.txt -v
 cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/vulnerabilities/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-vulnerabilities.txt -v
 cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/technologies/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-technologies.txt -v
 cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/ -o /root/recon/$domain/Special_subdomain/scan/nuclei/My-Nuclei-Templates.txt -v
