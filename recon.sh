@@ -9,7 +9,7 @@ for domain in $(cat $host);
 do
 massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns_3.txt /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
 cat /root/recon/$domain/subdomain/good/massdns_3.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/good_sub.txt
-#shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/good_sub.txt
+#shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/resolv_sub.txt
 done
 }
 resolving_domains_3
@@ -17,7 +17,7 @@ resolving_domains_3
 http_probe(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/good_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
+cat /root/recon/$domain/subdomain/good/resolv_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
 done
 }
 http_probe
@@ -25,7 +25,7 @@ http_probe
 http_probe(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/good_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
+gotator -fast -sub /root/recon/$domain/subdomain/good/httprobe_subdomain.txt -perm words.txt -depth 7 > /root/recon/$domain/subdomain/good/Gen_subdomain.txt &&  cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | httpx -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
 http_probe
