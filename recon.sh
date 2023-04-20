@@ -4,10 +4,21 @@ host=$1
 wordlist="/root/wordlist/all.txt"
 resolver="/root/wordlist/resolvers.txt"
 
+Gen_subdomain(){
+for domain in $(cat $host);
+do
+gotator -sub /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 3 > /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | cat /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | httpx -o /root/recon/$domain/Subomain-Takeover/httpx_gen_sub.txt
+cat /root/recon/$domain/Subomain-Takeover/httpx_gen_sub.txt | sort --unique | tee /root/recon/$domain/Subomain-Takeover/ge_subdomain.txt
+done
+}
+Gen_subdomain
+
 http_probe_1(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt | httprobe -o  /root/recon/$domain/Subomain-Takeover/httprobe_subdomain.txt 
+
+cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe -o /root/recon/$domain/Subomain-Takeover/httprobe_subdomain.txt 
+
 done
 }
 http_probe_1
@@ -36,7 +47,7 @@ do
 gotator -sub /root/recon/$domain/subdomain/good/httprobe_subdomain.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 3 > /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | cat /root/recon/$domain/subdomain/good/Gen_sub/Gen_subdomain.txt | httpx -o /root/recon/$domain/subdomain/good/Gen_sub/httpx_gen_sub.txt
 cp /root/recon/$domain/subdomain/good/httprobe_subdomain.txt /root/recon/$domain/subdomain/good/Gen_sub
 cat /root/recon/$domain/subdomain/good/Gen_sub/*.txt > /root/recon/$domain/subdomain/good/Gen_sub/all-gen-sub.txt
-cat /root/recon/$domain/url/all-gen-sub.txt | sort --unique | tee /root/recon/$domain/url/active_subdomain.txt
+cat /root/recon/$domain/subdomain/good/Gen_sub/all-gen-sub.txt | sort --unique | tee/root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt
 done
 }
 Gen_subdomain
