@@ -22,13 +22,13 @@ done
 }
 http_probe
 
-http_probe(){
+Gen_subdomain(){
 for domain in $(cat $host);
 do
-gotator -fast -sub /root/recon/$domain/subdomain/good/httprobe_subdomain.txt -perm words.txt -depth 7 > /root/recon/$domain/subdomain/good/Gen_subdomain.txt &&  cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | httpx -o /root/recon/$domain/subdomain/good/good_sub.txt
+gotator -sub /root/indriver.com/subdomain/good/httprobe_subdomain.txt -perm words.txt -depth 3 > /root/indriver.com/subdomain/good/Gen_subdomain.txt | cat /root/indriver.com/subdomain/good/Gen_subdomain.txt | httpx | sort --unique > /root/indriver.com/subdomain/good//root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
-http_probe
+Gen_subdomain
 
 domain_ip(){
 for domain in $(cat $host);
