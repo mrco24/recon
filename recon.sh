@@ -14,6 +14,22 @@ done
 }
 resolving_domains_3
 
+http_probe(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/good_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
+done
+}
+http_probe
+
+http_probe(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/good_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
+done
+}
+http_probe
+
 domain_ip(){
 for domain in $(cat $host);
 do
@@ -22,13 +38,13 @@ done
 }
 domain_ip
 
-http_prob(){
+httpx(){
 for domain in $(cat $host);
-do
+dohttprobe
 cat /root/recon/$domain/subdomain/good/good_sub.txt | httpx -threads 200 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
-http_prob
+httpx
 
 Special_subdomain(){
 for domain in $(cat $host);
