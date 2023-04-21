@@ -171,14 +171,21 @@ done
 }
 SecretFinder
 
-url_endpoints(){
+Url_endpoints(){
 for domain in $(cat $host);
 do
 cat /root/recon/$domain/url/final-url.txt | cut -d "/" -f4- >> /root/recon/$domain/url/url_endpoints.txt
 done
 }
-url_endpoints
+Url_endpoints
 
+Fuzz_Endpoint(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 > /root/recon/$domain/dri/Endpoint_Dir.txt
+done
+}
+Fuzz_Endpoint
 
 url_vuln_scanner(){
 for domain in $(cat $host);
