@@ -7,8 +7,8 @@ resolver="/root/wordlist/resolvers.txt"
 Gen_subdomain(){
 for domain in $(cat $host);
 do
-gotator -sub /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 3 > /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | cat /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | httpx -o /root/recon/$domain/Subomain-Takeover/httpx_gen_sub.txt
-cat /root/recon/$domain/Subomain-Takeover/httpx_gen_sub.txt | sort --unique | tee /root/recon/$domain/Subomain-Takeover/ge_subdomain.txt
+gotator -sub /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 3 > /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt
+cat /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | sort --unique | tee /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt
 done
 }
 Gen_subdomain
@@ -17,11 +17,19 @@ http_probe_1(){
 for domain in $(cat $host);
 do
 
-cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe -o /root/recon/$domain/Subomain-Takeover/httprobe_subdomain.txt 
+cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe -o /root/recon/$domain/Subomain-Takeover/sub_take_httprobe_subdomain.txt 
 
 done
 }
 http_probe_1
+
+Subdomai_takeover(){
+for domain in $(cat $host);
+do
+nuclei -l /root/recon/$domain/Subomain-Takeover/sub_take_httprobe_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
+done
+}
+Subdomai_takeover
 
 resolving_domains_3(){
 for domain in $(cat $host);
@@ -60,43 +68,6 @@ done
 }
 domain_ip
 
-Special_subdomain(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | anew /root/recon/$domain/Special_subdomain/Special_subdomain.txt 
-done
-}
-Special_subdomain
-
-Special_subdomain_scanner(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/cves/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-cves.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/vulnerabilities/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-vulnerabilities.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/technologies/  -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-technologies.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/ -o /root/recon/$domain/Special_subdomain/scan/nuclei/My-Nuclei-Templates.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/Nuclei 1/ -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-Nuclei.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t  nuclei -t /root/templates/my-nuclei-templates/workflows/ -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-workflows.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/helpers/ -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-helpers.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/idscan/ -o /root/recon/$domain/Special_subdomain/scan/nuclei/my-idscan.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/nuclei-templates/cves/ -o /root/recon/$domain/Special_subdomain/scan/new-nuclei/cve.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/nuclei-templates/vulnerabilities/  -o /root/recon/$domain/Special_subdomain/scan/new-nuclei/vulnerabilities.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/nuclei-templates/takeovers/ -o /root/recon/$domain/Special_subdomain/scan/new-nuclei/takover.txt -v
-cat /root/recon/$domain/Special_subdomain/Special_subdomain.txt | nuclei -t /root/templates/nuclei-templates/technologies/ -o /root/recon/$domain/Special_subdomain/scan/new-nuclei/technologies.txt -v
-jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/Special_subdomain/Special_subdomain.txt -o /root/recon/$domain/Special_subdomain/scan/my-jaeles/ -v
-jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/Special_subdomain/Special_subdomain.txt -o /root/recon/$domain/Special_subdomain/scan/jaeles/ -v
-done
-}
-Special_subdomain_scanner
-
-Special_subdomain_Dir(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/Special_subdomain/Special_subdomain.txt > /root/recon/$domain/dri/Special_subdomain_Dri.txt
-done
-}
-Special_subdomain_Dir
-
 open_port(){
 for domain in $(cat $host);
 do
@@ -113,14 +84,6 @@ gowitness file -f /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.tx
 done
 }
 web_Screenshot
-
-Subdomai_takeover(){
-for domain in $(cat $host);
-do
-nuclei -l /root/recon/$domain/Subomain-Takeover/httprobe_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
-done
-}
-Subdomai_takeover
 
 
 CloudFlare_Checker(){
@@ -207,6 +170,15 @@ cat /root/recon/$domain/url/final-url.txt | while read url; do python3 /root/OK-
 done
 }
 SecretFinder
+
+url_endpoints(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/url/final-url.txt | cut -d "/" -f4- >> /root/recon/$domain/url/url_endpoints.txt
+done
+}
+url_endpoints
+
 
 url_vuln_scanner(){
 for domain in $(cat $host);
