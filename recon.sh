@@ -191,6 +191,14 @@ done
 }
 url_vuln_scanner
 
+web_archive_urls(){
+for domain in $(cat /root/recon/$host);
+do
+cd /root/recon && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt
+done
+}
+web_archive_urls
+
 Get_js(){
 for domain in $(cat $host);
 do
