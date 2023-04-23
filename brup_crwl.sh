@@ -1,4 +1,3 @@
-  GNU nano 4.9                                                              1.sh
 #!/bin/bash
 
 # Set the Burp proxy address and port
