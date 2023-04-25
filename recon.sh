@@ -85,6 +85,21 @@ done
 }
 web_Screenshot
 
+Http-Request-Smugglingr(){
+for domain in $(cat $host);
+do
+cd /root/OK-VPS/tools/http-request-smuggling | python3 smuggle.py -urls /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | tee -a /root/recon/$domain/scan/Http-Request-Smugglingr.txt
+done
+}
+Http-Request-Smugglingr
+
+Php _ My _ Admin(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpmyadmin-setup.yaml  -o /root/recon/$domain/scan/php_my_admin.txt -v
+done
+}
+Php _ My _ Admin
 
 CloudFlare_Checker(){
 for domain in $(cat $host);
