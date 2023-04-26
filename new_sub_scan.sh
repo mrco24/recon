@@ -33,6 +33,22 @@ done
 }
 Special_subdomain_scanner
 
+Url_endpoints(){
+for domain in $(cat $host);
+do
+cat cat /root/sub.txt | cut -d "/" -f4- >> /root/scan/Dri/url_endpoints.txt
+done
+}
+Url_endpoints
+
+Fuzz_Endpoint(){
+for domain in $(cat $host);
+do
+dirsearch -l cat /root/sub.txt -w /root/scan/Dri/url_endpoints.txt -i 200,301,302 | tee -a /root/scan/Dri/Endpoint_Dir.txt
+done
+}
+Fuzz_Endpoint
+
 Special_subdomain_Dir(){
 for domain in $(cat $host);
 do
