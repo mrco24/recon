@@ -71,7 +71,7 @@ domain_ip
 open_port(){
 for domain in $(cat $host);
 do
-naabu --list /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt -o /root/recon/$domain/scan/open-port.txt
+naabu -list /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt -top-ports 1000 -exclude-ports 80,443 -o -o /root/recon/$domain/scan/open-port.txt
 done
 }
 open_port
