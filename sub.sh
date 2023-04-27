@@ -61,7 +61,7 @@ domain_enum
 Recursive(){
 for domain in $(cat /root/recon/$host);
 do
-cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/good/
+cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/
 cd /root/recon/$domain/subdomain
 ./Recursive.sh all_srot_sub.txt
 done
