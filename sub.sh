@@ -16,7 +16,7 @@ findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
 amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
-cd /root/recon/$domain/subdomain | github-subdomains -d $domain
+/root/OK-VPS/tools/Lilly/./lilly.sh -d $domain -a hLRieliNwbe2vJf8TEXo3keLG2pZcdIP | tee -a /root/recon/$domain/subdomain/lilly_shodan.txt
 curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee /root/recon/$domain/subdomain/web.archive.txt
 curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u | tee /root/recon/$domain/subdomain/crtsub.txt
 curl -s "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u | tee /root/recon/$domain/subdomain/riddlersub.txt
@@ -36,13 +36,13 @@ done
 domain_enum
 
 
-#resolving_domains(){
-#for domain in $(cat $host);
-#do
-#massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
-#cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/massdns_live_sub.txt
-#cd  /root/recon/$domain/subdomain/good
-#cat massdns_live_sub.txt | uniq -u > passive_resolving_live_sub.txt
+resolving_domains(){
+for domain in $(cat $host);
+do
+massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/massdns.txt /root/recon/$domain/subdomain/all_srot_sub.txt
+cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/massdns_live_sub.txt
+cd  /root/recon/$domain/subdomain/good
+cat massdns_live_sub.txt | uniq -u > passive_resolving_live_sub.txt
 #shuffledns -d /root/recon/$domain/subdomain/all_srot_sub.txt -r /root/wordlist/resolvers.txt -o  /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
 #done
 #}
@@ -61,9 +61,9 @@ domain_enum
 Recursive(){
 for domain in $(cat /root/recon/$host);
 do
-cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/
-cd /root/recon/$domain/subdomain
-./Recursive.sh all_srot_sub.txt
+cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/good/
+cd /root/recon/$domain/subdomain/good
+./Recursive.sh passive_resolving_live_sub.txt
 done
 }
 Recursive
