@@ -44,7 +44,7 @@ resolving_domains_3
 http_probe_2(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/resolv_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
+cat /root/recon/$domain/subdomain/good/good_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/httprobe_subdomain.txt 
 done
 }
 http_probe_2
