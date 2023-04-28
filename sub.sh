@@ -44,9 +44,9 @@ cat /root/recon/$domain/subdomain/massdns.txt | sed 's/A.*//; s/CN.*// ; s/\..$/
 cd  /root/recon/$domain/subdomain/good
 cat massdns_live_sub.txt | uniq -u > passive_resolving_live_sub.txt
 #shuffledns -d /root/recon/$domain/subdomain/all_srot_sub.txt -r /root/wordlist/resolvers.txt -o  /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
-#done
-#}
-#resolving_domains
+done
+}
+resolving_domains
 
 #brut(){
 #for domain in $(cat $host);
