@@ -169,7 +169,7 @@ cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | waybackurl
 cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | hakrawler | grep $domain > /root/recon/$domain/url/hakrawler-urls.txt
 gospider -S /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt -c 10 -d 1 --other-source | grep $domain | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
 cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | gau --threads 5 > /root/recon/$domain/url/gau-urls.txt
-cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | httpx | katana -o /root/recon/$domain/url/katana.txt
+cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | katana -o /root/recon/$domain/url/katana.txt
 cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | tee /root/recon/$domain/url/final-url.txt
