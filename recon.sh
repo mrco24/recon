@@ -4,7 +4,15 @@ host=$1
 wordlist="/root/wordlist/all.txt"
 resolver="/root/wordlist/resolvers.txt"
 
-
+resolving_domains_3(){
+for domain in $(cat $host);
+do
+massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns_3.txt /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
+cat /root/recon/$domain/subdomain/good/massdns_3.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/good_sub.txt
+#shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/resolv_sub.txt
+done
+}
+resolving_domains_3
 
 Gen_subdomain(){
 for domain in $(cat $host);
@@ -37,20 +45,11 @@ Subdomai_takeover
 http_probe_2(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/good_sub.txt | httprobe -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
+cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
 http_probe_2
 
-resolving_domains_3(){
-for domain in $(cat $host);
-do
-massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns_3.txt /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
-cat /root/recon/$domain/subdomain/good/massdns_3.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/good_sub.txt
-#shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/resolv_sub.txt
-done
-}
-resolving_domains_3
 
 domain_ip(){
 for domain in $(cat $host);
