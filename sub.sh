@@ -15,6 +15,7 @@ findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
 amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
+export CHAOS_KEY=8153077428be89cccb4f3f7e20f45a166c0f5565d9cb118b7c529a5d9ee5bd00
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 /root/OK-VPS/tools/Lilly/./lilly.sh -d $domain -a hLRieliNwbe2vJf8TEXo3keLG2pZcdIP | tee -a /root/recon/$domain/subdomain/lilly_shodan.txt
 curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee /root/recon/$domain/subdomain/web.archive.txt
