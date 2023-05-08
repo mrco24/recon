@@ -145,10 +145,8 @@ cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t 
 cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t  nuclei -t /root/templates/my-nuclei-templates/workflows/ -o /root/recon/$domain/scan/nuclei/my-workflows.txt -v
 cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/helpers/ -o /root/recon/$domain/scan/nuclei/my-helpers.txt -v
 cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/idscan/ -o /root/recon/$domain/scan/nuclei/my-idscan.txt -v
-cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/nuclei-templates/cves/ -o /root/recon/$domain/scan/new-nuclei/cve.txt -v
-cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/nuclei-templates/vulnerabilities/  -o /root/recon/$domain/scan/vulnerabilities.txt -v
-cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/nuclei-templates/takeovers/ -o /root/recon/$domain/scan/takover.txt -v
-cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/nuclei-templates/technologies/ -o /root/recon/$domain/scan/technologies.txt -v
+cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/templates/nuclei-templates/ -o /root/recon/$domain/scan/new-nuclei/All.txt -v
+cat /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt | nuclei -t /root/nuclei-templates/ -o /root/recon/$domain/scan/new-nuclei/nuclei-templates.txt -v
 jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
 jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/Gen_sub/active_subdomain.txt -o /root/recon/$domain/scan/jaeles/ -v
 done
