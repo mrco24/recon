@@ -17,7 +17,7 @@ resolving_domains_3
 Gen_subdomain(){
 for domain in $(cat $host);
 do
-gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 2 | tee -a /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt
+gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt
 cat /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | sort --unique | tee /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt
 done
 }
