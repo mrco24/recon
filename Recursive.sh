@@ -8,9 +8,9 @@ do
     subfinder -d $sub -all -silent | anew -q passive_recursive.txt
     assetfinder --subs-only $sub | anew -q passive_recursive.txt
     amass enum -passive -d $sub | anew -q passive_recursive.txt
-    findomain --quiet -t $sub | anew -q assive_recursive.txt
+    findomain --quiet -t $sub | anew -q passive_recursive.txt
     cat *.txt > R_allsub.txt
-    cat R_allsub.txt | uniq -u > /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
+    cat R_allsub.txt | uniq -u > Recursive_finalsub_all.txt
 
 done
 
