@@ -27,7 +27,7 @@ http_probe_1(){
 for domain in $(cat $host);
 do
 
-cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe -o /root/recon/$domain/Subomain-Takeover/sub_take_httprobe_subdomain.txt 
+cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe > /root/recon/$domain/subdomain/good/active_subdomain.txt 
 
 done
 }
@@ -36,19 +36,11 @@ http_probe_1
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/Subomain-Takeover/sub_take_httprobe_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
 done
 }
 Subdomai_takeover
 
-
-http_probe_2(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
-done
-}
-http_probe_2
 
 
 domain_ip(){
