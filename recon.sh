@@ -36,7 +36,7 @@ http_probe_1
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
 done
 }
 Subdomai_takeover
@@ -80,7 +80,7 @@ Http-Request-Smugglingr
 Php_My_Admin(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpadmin.yaml  -o /root/recon/$domain/scan/nuclei/Php-My-Admin/php_admin.txt -v
+nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpadmin.yaml -l /root/recon/$domain/subdomain/good/active_subdomain.txt -c 100  -o /root/recon/$domain/scan/nuclei/Php-My-Admin/php_admin.txt -v
 done
 }
 Php_My_Admin
