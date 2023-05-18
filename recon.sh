@@ -129,18 +129,18 @@ Dead_sbdomain
 vuln_scanner(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/cves/  -o /root/recon/$domain/scan/nuclei/my-cves.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/vulnerabilities/  -o /root/recon/$domain/nuclei/scan/my-vulnerabilities.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/technologies/  -o /root/recon/$domain/scan/nuclei/my-technologies.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/ -o /root/recon/$domain/scan/nuclei/My-Nuclei-Templates.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/Nuclei 1/ -o /root/recon/$domain/scan/nuclei/my-Nuclei.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t  nuclei -t /root/templates/my-nuclei-templates/workflows/ -o /root/recon/$domain/scan/nuclei/my-workflows.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/helpers/ -o /root/recon/$domain/scan/nuclei/my-helpers.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/my-nuclei-templates/idscan/ -o /root/recon/$domain/scan/nuclei/my-idscan.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/templates/nuclei-templates/ -o /root/recon/$domain/scan/new-nuclei/All.txt -v
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | nuclei -t /root/nuclei-templates/ -o /root/recon/$domain/scan/new-nuclei/nuclei-templates.txt -v
-jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
-jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/jaeles/ -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/cves/ -c 100 -o /root/recon/$domain/scan/nuclei/my-cves.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/vulnerabilities/ -c 100 -o /root/recon/$domain/nuclei/scan/my-vulnerabilities.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/technologies/ -c 100 -o /root/recon/$domain/scan/nuclei/my-technologies.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/ -c 100 -o /root/recon/$domain/scan/nuclei/My-Nuclei-Templates.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/Nuclei 1/ -c 100 -o /root/recon/$domain/scan/nuclei/my-Nuclei.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t  nuclei -t /root/templates/my-nuclei-templates/workflows/ -c 100 -o /root/recon/$domain/scan/nuclei/my-workflows.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/helpers/ -c 100 -o /root/recon/$domain/scan/nuclei/my-helpers.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/idscan/ -c 100 -o /root/recon/$domain/scan/nuclei/my-idscan.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/nuclei-templates/ -c 100 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/nuclei-templates/ -c 100 -o /root/recon/$domain/scan/new-nuclei/nuclei-templates.txt -v
+jaeles scan -c 100 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
+jaeles scan -c 100 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/jaeles/ -v
 done
 }
 vuln_scanner
@@ -196,8 +196,8 @@ Fuzz_Endpoint
 url_vuln_scanner(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/url/valid_urls.txt | nuclei -t /root/templates/my-nuclei-templates/  -o /root/recon/$domain/scan/nuclei/urls_my_nuclei_scan.txt -v
-cat /root/recon/$domain/url/valid_urls.txt | nuclei -t /root/templates/nuclei-templates/  -o /root/recon/$domain/scan/nuclei/urls_nuclei_scan.txt -v
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/my-nuclei-templates/ -c 100  -o /root/recon/$domain/scan/nuclei/urls_my_nuclei_scan.txt -v
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/nuclei-templates/ -c 100 -o /root/recon/$domain/scan/nuclei/urls_nuclei_scan.txt -v
 jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/ -v
 jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/jaeles/ -v
 done
