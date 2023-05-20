@@ -129,7 +129,7 @@ vuln_scanner(){
 for domain in $(cat $host);
 do
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/cves/ -c 100 -o /root/recon/$domain/scan/nuclei/my-cves.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/vulnerabilities/ -c 100 -o /root/recon/$domain/nuclei/scan/my-vulnerabilities.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/vulnerabilities/ -c 100 -o /root/recon/$domain/scan/nuclei/my-vulnerabilities.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/technologies/ -c 100 -o /root/recon/$domain/scan/nuclei/my-technologies.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/ -c 100 -o /root/recon/$domain/scan/nuclei/My-Nuclei-Templates.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/Nuclei 1/ -c 100 -o /root/recon/$domain/scan/nuclei/my-Nuclei.txt -v
