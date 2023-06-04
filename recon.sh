@@ -262,9 +262,8 @@ gf_patterns
 SQL(){
 for domain in $(cat $host);
 do
-sqlmap -m /root/recon/$domain/gf/sqli.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sql_url.txt
-sqlmap -m /root/recon/$domain/url/valid_urls.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sql_url.txt
-
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/error-based-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/error-based-sql-injection.txt -v
+sqlmap -m /root/recon/$domain/url/valid_urls.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sqlmap_sql_url.txt
 done
 }
 SQL
@@ -282,3 +281,19 @@ cat /root/recon/$domain/subdomain/good/active_subdomain.txt | /root/OK-VPS/tools
 done
 }
 Refactors_xss
+
+Bilnd_xss(){
+for domain in $(cat $host);
+do
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header_blind_xss.yaml -c 100  -o /root/recon/$domain/xss/header_blind_xss.txt -v
+done
+}
+Bilnd_xss
+
+Bilnd_xss(){
+for domain in $(cat $host);
+do
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header_blind_xss.yaml -c 100  -o /root/recon/$domain/xss/header_blind_xss.txt -v
+done
+}
+Bilnd_xss
