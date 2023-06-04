@@ -147,7 +147,7 @@ vuln_scanner
 web_archive_urls(){
 for domain in $(cat /root/recon/$host);
 do
-cd /root/recon && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/active_subdomain.txt
+cd /root/recon/$domain/url/ && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/active_subdomain.txt
 done
 }
 web_archive_urls
