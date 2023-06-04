@@ -62,7 +62,7 @@ resolving_domains
 Recursive(){
 for domain in $(cat /root/recon/$host);
 do
-cp /root/recon/web_archive_urls.sh root/recon/$domain/url/
+cp /root/recon/web_archive_urls.sh /root/recon/$domain/url/
 cp /root/recon/Recursive.sh /root/recon/$domain/subdomain/good/
 cd /root/recon/$domain/subdomain/good
 ./Recursive.sh passive_resolving_live_sub.txt
