@@ -294,7 +294,9 @@ dir-traversal(){
 for domain in $(cat $host);
 do
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/dir-traversal.yaml -c 100  -o /root/recon/$domain/scan/nuclei/dir-traversal.txt -v
-jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/ -v
+jaeles scan -c 60 -s /root/templates/best/lfi-header-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header -v
+jaeles scan -c 60 -s /root/templates/best/lfi-param-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-param -v
+jaeles scan -c 60 -s /root/templates/best/lfi-header-windows-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header-windows -v
 done
 }
 dir-traversal
