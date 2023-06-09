@@ -91,30 +91,6 @@ done
 CloudFlare_Checker
 
 
-FUZZ_active(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
-done
-}
-FUZZ_active
-
-FUZZ_ip(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/ip_sub.txt  > /root/recon/$domain/dri/dri_ip.txt
-done
-}
-FUZZ_ip
-
-Dead_sbdomain(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt  > /root/recon/$domain/dri/dri_dead_subdomain.txt
-done
-}
-Dead_sbdomain
-
 vuln_scanner(){
 for domain in $(cat $host);
 do
@@ -291,3 +267,28 @@ cat /root/recon/$domain/js_url/good_js_url.txt | while read url; do python3 /roo
 done
 }
 SecretFinder_js
+
+
+FUZZ_active(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
+done
+}
+FUZZ_active
+
+FUZZ_ip(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/ip_sub.txt  > /root/recon/$domain/dri/dri_ip.txt
+done
+}
+FUZZ_ip
+
+Dead_sbdomain(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt  > /root/recon/$domain/dri/dri_dead_subdomain.txt
+done
+}
+Dead_sbdomain
