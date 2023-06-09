@@ -145,7 +145,7 @@ web_archive_urls
 find_urls(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | gau --threads 10 | tee -a /root/recon/$domain/url/gau-urls.txt
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt |  gauplus -t 40 | tee -a /root/recon/$domain/url/gaplus-urls.txt
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | waybackurls | tee /root/recon/$domain/url/waybackurls.txt
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | hakrawler | tee -a /root/recon/$domain/url/hakrawler-urls.txt
 gospider -S /root/recon/$domain/subdomain/good/active_subdomain.txt -c 10 -d 1 --other-source | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
