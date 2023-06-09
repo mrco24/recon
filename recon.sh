@@ -26,7 +26,7 @@ Gen_subdomain
 http_probe_1(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe > /root/recon/$domain/subdomain/good/active_subdomain.txt 
+cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe | tee -a /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
 http_probe_1
