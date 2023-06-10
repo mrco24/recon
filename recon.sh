@@ -134,13 +134,13 @@ done
 }
 find_urls
 
-SecretFinder(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/url/final-url.txt | while read url; do python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli >> /root/recon/$domain/js_url/url_SecretFinder.txt; done
-done
-}
-SecretFinder
+#SecretFinder(){
+#for domain in $(cat $host);
+#do
+#cat /root/recon/$domain/url/final-url.txt | while read url; do python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli >> /root/recon/$domain/js_url/url_SecretFinder.txt; done
+#done
+#}
+#SecretFinder
 
 Url_endpoints(){
 for domain in $(cat $host);
@@ -149,14 +149,6 @@ cat /root/recon/$domain/url/final-url.txt | cut -d "/" -f4- >> /root/recon/$doma
 done
 }
 Url_endpoints
-
-Fuzz_Endpoint(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 > /root/recon/$domain/dri/Endpoint_Dir.txt
-done
-}
-Fuzz_Endpoint
 
 url_vuln_scanner(){
 for domain in $(cat $host);
@@ -260,14 +252,21 @@ done
 Get_js
 
 
-SecretFinder_js(){
+#SecretFinder_js(){
+#for domain in $(cat $host);
+#do
+#cat /root/recon/$domain/js_url/good_js_url.txt | while read url; do python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli >> /root/recon/$domain/js_url/js_SecretFinder.txt; done
+#done
+#}
+#SecretFinder_js
+
+Fuzz_Endpoint(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/js_url/good_js_url.txt | while read url; do python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli >> /root/recon/$domain/js_url/js_SecretFinder.txt; done
+dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 | tee -a /root/recon/$domain/dri/Endpoint_Dir.txt
 done
 }
-SecretFinder_js
-
+Fuzz_Endpoint
 
 FUZZ_active(){
 for domain in $(cat $host);
