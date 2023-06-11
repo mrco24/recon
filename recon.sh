@@ -94,6 +94,7 @@ CloudFlare_Checker
 vuln_scanner(){
 for domain in $(cat $host);
 do
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/cves/ -c 50 -o /root/recon/$domain/scan/nuclei/my-cves.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/vulnerabilities/ -c 50 -o /root/recon/$domain/scan/nuclei/my-vulnerabilities.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/technologies/ -c 100 -o /root/recon/$domain/scan/nuclei/my-technologies.txt -v
@@ -153,6 +154,7 @@ Url_endpoints
 url_vuln_scanner(){
 for domain in $(cat $host);
 do
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/my-nuclei-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/urls_my_nuclei_scan.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/urls_nuclei_scan.txt -v
 jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/ -v
