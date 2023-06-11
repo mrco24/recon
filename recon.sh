@@ -129,7 +129,7 @@ gospider -S /root/recon/$domain/subdomain/good/active_subdomain.txt -c 10 -d 1 -
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | katana -o /root/recon/$domain/url/katana.txt
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
-cat /root/recon/$domain/url/all-url.txt | sort --unique | tee /root/recon/$domain/url/final-url.txt
+cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/final-url.txt
 cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/valid_urls.txt
 done
 }
