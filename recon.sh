@@ -157,8 +157,8 @@ do
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/my-nuclei-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/urls_my_nuclei_scan.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/urls_nuclei_scan.txt -v
-jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/ -v
-jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/jaeles/ -v
+jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/url-jaeles/ -v
+jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/url-new-jaeles/ -v
 done
 }
 url_vuln_scanner
