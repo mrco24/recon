@@ -104,7 +104,6 @@ nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templ
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/helpers/ -c 50 -o /root/recon/$domain/scan/nuclei/my-helpers.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/idscan/ -c 50 -o /root/recon/$domain/scan/nuclei/my-idscan.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/nuclei-templates.txt -v
 jaeles scan -c 60 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
 jaeles scan -c 60 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/jaeles/ -v
 done
