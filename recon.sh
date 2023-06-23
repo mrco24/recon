@@ -7,9 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 resolving_domains_3(){
 for domain in $(cat $host);
 do
-massdns -r $resolver -t A -o S -w /root/recon/$domain/subdomain/good/massdns_3.txt /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt
-cat /root/recon/$domain/subdomain/good/massdns_3.txt | sed 's/A.*//; s/CN.*// ; s/\..$//' | tee > /root/recon/$domain/subdomain/good/good_sub.txt
-#shuffledns -d /root/recon/$domain/subdomain/good/finalsub.txt -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/good/resolv_sub.txt
+httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 150 -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
 resolving_domains_3
@@ -126,14 +124,6 @@ done
 }
 find_urls
 
-#SecretFinder(){
-#for domain in $(cat $host);
-#do
-#cat /root/recon/$domain/url/final-url.txt | while read url; do python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli >> /root/recon/$domain/js_url/url_SecretFinder.txt; done
-#done
-#}
-#SecretFinder
-
 Url_endpoints(){
 for domain in $(cat $host);
 do
@@ -215,17 +205,13 @@ done
 }
 dir-traversal
 
-url_vuln_scanner(){
+Nuclei Fuzz_Endpoint(){
 for domain in $(cat $host);
 do
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/my-nuclei-templates/  -o /root/recon/$domain/scan/nuclei/urls_my_nuclei_scan.txt -v
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/nuclei-templates/ -o /root/recon/$domain/scan/nuclei/urls_nuclei_scan.txt -v
-jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/url-jaeles/ -v
-jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/url-new-jaeles/ -v
 done
 }
-url_vuln_scanner
+Nuclei Fuzz_Endpoint
 
 Get_js(){
 for domain in $(cat $host);
