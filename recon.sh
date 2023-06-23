@@ -38,14 +38,6 @@ done
 Subdomai_takeover
 
 
-domain_ip(){
-for domain in $(cat $host);
-do
-gf ip /root/recon/$domain/subdomain/good/massdns_3.txt | sed 's/.*://' > /root/recon/$domain/subdomain/good/ip_sub.txt
-done
-}
-domain_ip
-
 open_port(){
 for domain in $(cat $host);
 do
@@ -93,13 +85,7 @@ vuln_scanner(){
 for domain in $(cat $host);
 do
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/cves/ -c 50 -o /root/recon/$domain/scan/nuclei/my-cves.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/vulnerabilities/ -c 50 -o /root/recon/$domain/scan/nuclei/my-vulnerabilities.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/technologies/ -c 50 -o /root/recon/$domain/scan/nuclei/my-technologies.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/ -c 50 -o /root/recon/$domain/scan/nuclei/My-Nuclei-Templates.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/Nuclei 1/ -c 50 -o /root/recon/$domain/scan/nuclei/my-Nuclei.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/workflows/ -c 50 -o /root/recon/$domain/scan/nuclei/my-workflows.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/idscan/ -c 50 -o /root/recon/$domain/scan/nuclei/my-idscan.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/my-all.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
 jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
 jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/jaeles/ -v
@@ -213,6 +199,22 @@ done
 }
 Nuclei Fuzz_Endpoint
 
+Fuzz_Endpoint(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 | tee -a /root/recon/$domain/dri/Endpoint_Dir.txt
+done
+}
+Fuzz_Endpoint
+
+FUZZ_active(){
+for domain in $(cat $host);
+do
+dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
+done
+}
+FUZZ_active
+
 Get_js(){
 for domain in $(cat $host);
 do
@@ -240,18 +242,4 @@ Get_js
 #}
 #SecretFinder_js
 
-Fuzz_Endpoint(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 | tee -a /root/recon/$domain/dri/Endpoint_Dir.txt
-done
-}
-Fuzz_Endpoint
 
-FUZZ_active(){
-for domain in $(cat $host);
-do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
-done
-}
-FUZZ_active
