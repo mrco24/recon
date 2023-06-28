@@ -126,7 +126,7 @@ gf xss /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/xss.t
 gf my-lfi /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/my-lfi.txt
 gf sqli /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/sqli.txt
 gf lfi /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/lfi.txt
-gf redirect /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/rmy-lfiedirect.txt
+gf redirect /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/my-Redirect.txt
 gf aws-keys /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/aws-keys-json.txt
 gf interestingsubs /root/recon/$domain/subdomain/good/active_subdomain.txt |  tee /root/recon/$domain/gf/interestingsubs.txt
 gf s3-buckets /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/s3-buckets.txt
@@ -183,7 +183,7 @@ Bilnd_xss
 dir-traversal(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/dir-traversal.yaml -c 100  -o /root/recon/$domain/scan/nuclei/dir-traversal.txt -v
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/dir-traversal.yaml -c 60  -o /root/recon/$domain/scan/nuclei/dir-traversal.txt -v
 jaeles scan -c 50 -s /root/templates/best/lfi-header-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header -v
 jaeles scan -c 50 -s /root/templates/best/lfi-param-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-param -v
 jaeles scan -c 50 -s /root/templates/best/lfi-header-windows-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header-windows -v
@@ -191,10 +191,18 @@ done
 }
 dir-traversal
 
-Nuclei Fuzz_Endpoint(){
+Nuclei_Redirect(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
+nuclei -l /root/recon/$domain/gf/my-Redirect.txt -t /root/templates/fuzzing-templates/ -c 60  -o /root/recon/$domain/scan/nuclei/Redirect.txt -v
+done
+}
+Nuclei Fuzz_Endpoint
+
+Nuclei_Redirect(){
+for domain in $(cat $host);
+do
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/ -c 60  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
 done
 }
 Nuclei Fuzz_Endpoint
