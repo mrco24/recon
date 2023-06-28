@@ -202,7 +202,7 @@ Nuclei Fuzz_Endpoint
 Nuclei_Redirect(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/ -c 60  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
 done
 }
 Nuclei Fuzz_Endpoint
