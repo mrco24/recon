@@ -71,7 +71,8 @@ Recursive
 recon(){
 for domain in $(cat /root/recon/$host);
 do
-cd /root/recon && ./recon.sh /root/recon/$host
+cd /root/recon
+./recon.sh /root/recon/$host
 done
 }
 recon
