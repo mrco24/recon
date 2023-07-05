@@ -21,13 +21,13 @@ done
 }
 Gen_subdomain
 
-httpx(){
+httpx_resolv(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 70 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
-httpx
+httpx_resolv
 
 Subdomai_takeover(){
 for domain in $(cat $host);
@@ -36,7 +36,6 @@ nuclei -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -t /root/t
 done
 }
 Subdomai_takeover
-
 
 open_port(){
 for domain in $(cat $host);
@@ -47,14 +46,14 @@ done
 }
 open_port
 
-web_Screenshot(){
-for domain in $(cat $host);
-do
-cd /root/recon/$domain/Subomain-Screenshots 
-gowitness file -f /root/recon/$domain/subdomain/good/active_subdomain.txt
-done
-}
-web_Screenshot
+#web_Screenshot(){
+#for domain in $(cat $host);
+#do
+#cd /root/recon/$domain/Subomain-Screenshots 
+#gowitness file -f /root/recon/$domain/subdomain/good/active_subdomain.txt
+#done
+#}
+#web_Screenshot
 
 Http-Request-Smugglingr(){
 for domain in $(cat $host);
