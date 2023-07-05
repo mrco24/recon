@@ -4,13 +4,13 @@ host=$1
 wordlist="/root/wordlist/all.txt"
 resolver="/root/wordlist/resolvers.txt"
 
-resolving_domains_3(){
+resolving_domains(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 70 -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
-resolving_domains_3
+resolving_domains
 
 Gen_subdomain(){
 for domain in $(cat $host);
