@@ -21,13 +21,13 @@ done
 }
 Gen_subdomain
 
-httpx_resolv(){
+httpx_resolve(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 70 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
-httpx_resolv
+httpx_resolve
 
 Subdomai_takeover(){
 for domain in $(cat $host);
