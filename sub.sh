@@ -41,7 +41,7 @@ resolving_domains(){
 for domain in $(cat $host);
 do
 
-httpx -l /root/recon/$domain/subdomain/all_srot_sub.txt -threads 100 -o /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
+httpx -l /root/recon/$domain/subdomain/all_srot_sub.txt -threads 70 -o /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
 
 done
 }
