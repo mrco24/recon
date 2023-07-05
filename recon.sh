@@ -72,13 +72,13 @@ done
 }
 Php_My_Admin
 
-CloudFlare_Checker(){
-for domain in $(cat $host);
-do
-cf-check -d /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
-done
-}
-CloudFlare_Checker
+#CloudFlare_Checker(){
+#for domain in $(cat $host);
+#do
+#cf-check -d /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
+#done
+#}
+#CloudFlare_Checker
 
 
 vuln_scanner(){
