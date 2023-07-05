@@ -21,18 +21,18 @@ done
 }
 Gen_subdomain
 
-http_probe_1(){
+httpx(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt | httprobe | tee -a /root/recon/$domain/subdomain/good/active_subdomain.txt 
+httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 150 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
-http_probe_1
+httpx
 
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt  -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
+nuclei -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
 done
 }
 Subdomai_takeover
