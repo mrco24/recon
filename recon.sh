@@ -183,6 +183,14 @@ done
 }
 Bilnd_xss
 
+#Dom_xss(){
+#for domain in $(cat $host);
+#do
+#cat /root/recon/$domain/url/valid_urls.txt | /root/OK-VPS/tools/file/findom-xss/./findom-xss.sh | tee -a /root/recon/$domain/xss/Dom_xss.txt
+#done
+#}
+#Dom_xss
+
 dir-traversal(){
 for domain in $(cat $host);
 do
