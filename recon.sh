@@ -105,6 +105,9 @@ cat /root/recon/$domain/subdomain/good/active_subdomain.txt | xargs -n 1 -I {} p
 cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/active_subdomain.txt
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/final-url.txt
+arjun -i /root/recon/$domain/url/final-url.txt -t 30 -oT /root/recon/$domain/url/arjun.txt
+cat /root/recon/$domain/url/*.txt | tee -a /root/recon/$domain/url/ok_url.txt
+cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/good-url.txt
 cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/valid_urls.txt
 done
 }
