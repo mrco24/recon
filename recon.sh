@@ -7,7 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 resolving_domains_3(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 150 -o /root/recon/$domain/subdomain/good/good_sub.txt
+httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 70 -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
 resolving_domains_3
@@ -24,7 +24,7 @@ Gen_subdomain
 httpx(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 150 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
+httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 70 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
 httpx
