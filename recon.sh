@@ -105,7 +105,7 @@ cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomai
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/sort-url.txt
 arjun -i /root/recon/$domain/url/sort-url.txt -t 30 -oT /root/recon/$domain/url/arjun.txt
-cat /root/recon/$domain/url/*.txt | tee -a /root/recon/$domain/url/all-url.txt
+cat /root/recon/$domain/url/*.txt | tee -a /root/recon/$domain/url/2all-url.txt
 uro -i /root/recon/$domain/url/all-url.txt -o /root/recon/$domain/url/final-url.txt
 cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/valid_urls.txt
 done
