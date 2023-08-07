@@ -24,10 +24,26 @@ Gen_subdomain
 httpx_resolve(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 70 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
+httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 50 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
 httpx_resolve
+
+interesting_subs(){
+for domain in $(cat $host);
+do
+gf interestingsubs /root/recon/$domain/subdomain/good/active_subdomain.txt | tee /root/recon/$domain/subdomain/good/interestingsubs.txt 
+done
+}
+interesting_subs 
+
+nrich_cve(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dnsx -a -resp-only | nrich -  | tee -a /root/recon/$domain/scan/nrich_cve.txt 
+done
+}
+nrich_cve 
 
 Subdomai_takeover(){
 for domain in $(cat $host);
