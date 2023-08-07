@@ -7,7 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 resolving_domains(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 70 -o /root/recon/$domain/subdomain/good/good_sub.txt
+httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 50 -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
 resolving_domains
@@ -71,19 +71,18 @@ done
 }
 Php_My_Admin
 
-#CloudFlare_Checker(){
-#for domain in $(cat $host);
-#do
-#cf-check -d /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
-#done
-#}
-#CloudFlare_Checker
+CloudFlare_Checker(){
+for domain in $(cat $host);
+do
+cf-check -d /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
+done
+}
+CloudFlare_Checker
 
 
 vuln_scanner(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/my-all.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
 jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
@@ -182,13 +181,13 @@ done
 }
 Bilnd_xss
 
-#Dom_xss(){
-#for domain in $(cat $host);
-#do
-#cat /root/recon/$domain/url/valid_urls.txt | /root/OK-VPS/tools/findom-xss/./findom-xss.sh | tee -a /root/recon/$domain/xss/Dom_xss.txt
-#done
-#}
-#Dom_xss
+Dom_xss(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/url/valid_urls.txt | /root/OK-VPS/tools/findom-xss/./findom-xss.sh | tee -a /root/recon/$domain/xss/Dom_xss.txt
+done
+}
+Dom_xss
 
 dir-traversal(){
 for domain in $(cat $host);
@@ -233,6 +232,14 @@ done
 }
 FUZZ_active
 
+Nucli_fuzz(){
+for domain in $(cat $host);
+do
+nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
+done
+}
+Nucli_fuzz
+
 Get_js(){
 for domain in $(cat $host);
 do
@@ -250,7 +257,6 @@ cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee /root/recon/
 done
 }
 Get_js
-
 
 #SecretFinder_js(){
 #for domain in $(cat $host);
