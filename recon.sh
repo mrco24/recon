@@ -243,10 +243,19 @@ Fuzz_Endpoint
 FUZZ_active(){
 for domain in $(cat $host);
 do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt  > /root/recon/$domain/dri/dri_activ.txt
+dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/dri/dri_activ.txt
 done
 }
 FUZZ_active
+
+ip_sub(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/subdomain_ip.txt
+dirsearch -l /root/recon/$domain/subdomain/good/subdomain_ip.txt | tee -a /root/recon/$domain/dri/sub_ip_dri_activ.txt
+do ne
+}
+ip_sub
 
 Nucli_fuzz(){
 for domain in $(cat $host);
