@@ -73,13 +73,12 @@ open_port
 #}
 #web_Screenshot
 
-Http-Request-Smugglingr(){
-for domain in $(cat $host);
-do
-cd /root/OK-VPS/tools/http-request-smuggling | python3 smuggle.py -urls /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/scan/Http-Request-Smugglingr.txt
-done
-}
-Http-Request-Smugglingr
+#Http-Request-Smugglingr(){
+#for domain in $(cat $host);
+#do
+#cd /root/OK-VPS/tools/http-request-smuggling | python3 smuggle.py -urls /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/scan/Http-Request-Smugglingr.txt
+#}
+#Http-Request-Smugglingr
 
 Php_My_Admin(){
 for domain in $(cat $host);
