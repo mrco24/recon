@@ -15,8 +15,10 @@ resolving_domains
 Gen_subdomain(){
 for domain in $(cat $host);
 do
-gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt
-cat /root/recon/$domain/Subomain-Takeover/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt
+gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
+cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
+cat /root/recon/$domain/subdomain/good/*.txt > /root/recon/$domain/subdomain/good/allsub.txt
+cat /root/recon/$domain/subdomain/good/allsub.txt | uniq -u | grep $domain | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
 done
 }
 Gen_subdomain
@@ -24,7 +26,7 @@ Gen_subdomain
 httpx_resolve(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -threads 50 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
+httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -threads 50 -o /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
 httpx_resolve
@@ -48,7 +50,7 @@ nrich_cve
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/Subomain-Takeover/take_ge_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/take_ge_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
 done
 }
 Subdomai_takeover
