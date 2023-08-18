@@ -19,6 +19,9 @@ gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlis
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
 cat /root/recon/$domain/subdomain/good/*.txt > /root/recon/$domain/subdomain/good/allsub.txt
 cat /root/recon/$domain/subdomain/good/allsub.txt |anew| tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
+done
+}
+Gen_subdomain
 
 httpx_resolve(){
 for domain in $(cat $host);
