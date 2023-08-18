@@ -18,10 +18,7 @@ do
 gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
 cat /root/recon/$domain/subdomain/good/*.txt > /root/recon/$domain/subdomain/good/allsub.txt
-cat /root/recon/$domain/subdomain/good/allsub.txt | uniq -u | grep $domain | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
-done
-}
-Gen_subdomain
+cat /root/recon/$domain/subdomain/good/allsub.txt |anew| tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
 
 httpx_resolve(){
 for domain in $(cat $host);
