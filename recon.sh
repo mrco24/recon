@@ -7,7 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 resolving_domains(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 50 -o /root/recon/$domain/subdomain/good/good_sub.txt
+httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 40 -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
 resolving_domains
@@ -26,7 +26,7 @@ Gen_subdomain
 httpx_resolve(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -threads 50 -o /root/recon/$domain/subdomain/good/httpx_sub.txt
+httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -threads 40 -o /root/recon/$domain/subdomain/good/httpx_sub.txt
 cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/active_subdomain.txt
 done
 }
@@ -112,7 +112,7 @@ vuln_scanner
 find_urls(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt |  gauplus -t 40 | tee -a /root/recon/$domain/url/gaplus-urls.txt
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt |  gauplus -t 30 | tee -a /root/recon/$domain/url/gaplus-urls.txt
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | waybackurls | tee /root/recon/$domain/url/waybackurls.txt
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | hakrawler | tee -a /root/recon/$domain/url/hakrawler-urls.txt
 gospider -S /root/recon/$domain/subdomain/good/active_subdomain.txt -c 10 -d 1 --other-source | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
@@ -122,7 +122,7 @@ cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomai
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/sort-url.txt
 httpx -l /root/recon/$domain/url/sort-url.txt -o /root/recon/$domain/url/url_httpx.txt
-arjun -i /root/recon/$domain/url/url_httpx.txt -t 30 -oT /root/recon/$domain/url/arjun.txt
+arjun -i /root/recon/$domain/url/url_httpx.txt -t 20 -oT /root/recon/$domain/url/arjun.txt
 cat /root/recon/$domain/url/*.txt | tee -a /root/recon/$domain/url/2all-url.txt
 cat /root/recon/$domain/url/2all-url.txt | sort --unique | tee /root/recon/$domain/url/final-url.txt
 cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/valid_urls.txt
