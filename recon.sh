@@ -17,6 +17,8 @@ for domain in $(cat $host);
 do
 gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
+shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | tee -a /root/recon/$domain/subdomain/good/shodan_ip.txt
+cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/domain_ip.txt
 cat /root/recon/$domain/subdomain/good/*.txt > /root/recon/$domain/subdomain/good/allsub.txt
 cat /root/recon/$domain/subdomain/good/allsub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
 done
@@ -27,7 +29,7 @@ httpx_resolve(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -threads 40 -o /root/recon/$domain/subdomain/good/httpx_sub.txt
-cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/active_subdomain.txt
+cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/active_subdomain.txt 
 done
 }
 httpx_resolve
@@ -59,6 +61,7 @@ Subdomai_takeover
 open_port(){
 for domain in $(cat $host);
 do
+naabu -rate 10000 -list /root/recon/$domain/subdomain/good/active_subdomain.txt
 naabu -list /root/recon/$domain/subdomain/good/active_subdomain.txt -top-ports 1000 -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/open-port.txt
 naabu -list /root/recon/$domain/subdomain/good/active_subdomain.txt -p - -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/filter-all-open-port.txt
 done
