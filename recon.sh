@@ -255,7 +255,7 @@ for domain in $(cat $host);
 do
 cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/subdomain_ip.txt
 dirsearch -l /root/recon/$domain/subdomain/good/subdomain_ip.txt | tee -a /root/recon/$domain/dri/sub_ip_dri_activ.txt
-do
+done
 }
 ip_sub
 
