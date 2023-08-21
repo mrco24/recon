@@ -17,8 +17,6 @@ for domain in $(cat $host);
 do
 gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
-cat /root/recon/$domain/subdomain/good/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/ge_allsub.txt
-altdns -i /root/recon/$domain/subdomain/good/ge_allsub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/altdns_sub.txt
 cat /root/recon/$domain/subdomain/good/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/ip_chack_allsub.txt
 cat /root/recon/$domain/subdomain/good/ip_chack_allsub.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/domain_ip.txt
 cat /root/recon/$domain/subdomain/good/*.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
@@ -29,8 +27,10 @@ Gen_subdomain
 httpx_resolve(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -threads 40 -o /root/recon/$domain/subdomain/good/httpx_sub.txt
-cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/active_subdomain.txt 
+httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt
+altdns -i /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
+cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
+cat /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
 done
 }
 httpx_resolve
@@ -38,7 +38,7 @@ httpx_resolve
 interesting_subs(){
 for domain in $(cat $host);
 do
-gf interestingsubs /root/recon/$domain/subdomain/good/active_subdomain.txt | tee /root/recon/$domain/subdomain/good/interestingsubs.txt 
+gf interestingsubs /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | tee /root/recon/$domain/subdomain/good/interestingsubs.txt 
 done
 }
 interesting_subs 
@@ -46,7 +46,7 @@ interesting_subs
 nrich_cve(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dnsx -a -resp-only | nrich -  | tee -a /root/recon/$domain/scan/nrich_cve.txt 
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | dnsx -a -resp-only | nrich -  | tee -a /root/recon/$domain/scan/nrich_cve.txt 
 done
 }
 nrich_cve 
@@ -62,9 +62,9 @@ Subdomai_takeover
 open_port(){
 for domain in $(cat $host);
 do
-naabu -rate 10000 -list /root/recon/$domain/subdomain/good/active_subdomain.txt
-naabu -list /root/recon/$domain/subdomain/good/active_subdomain.txt -top-ports 1000 -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/open-port.txt
-naabu -list /root/recon/$domain/subdomain/good/active_subdomain.txt -p - -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/filter-all-open-port.txt
+#naabu -rate 10000 -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
+naabu -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -top-ports 1000 -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/open-port.txt
+naabu -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -p - -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/filter-all-open-port.txt
 done
 }
 open_port
@@ -73,7 +73,7 @@ open_port
 #for domain in $(cat $host);
 #do
 #cd /root/recon/$domain/Subomain-Screenshots 
-#gowitness file -f /root/recon/$domain/subdomain/good/active_subdomain.txt
+#gowitness file -f /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
 #done
 #}
 #web_Screenshot
@@ -81,14 +81,14 @@ open_port
 #Http-Request-Smugglingr(){
 #for domain in $(cat $host);
 #do
-#cd /root/OK-VPS/tools/http-request-smuggling | python3 smuggle.py -urls /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/scan/Http-Request-Smugglingr.txt
+#cd /root/OK-VPS/tools/http-request-smuggling | python3 smuggle.py -urls /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | tee -a /root/recon/$domain/scan/Http-Request-Smugglingr.txt
 #}
 #Http-Request-Smugglingr
 
 Php_My_Admin(){
 for domain in $(cat $host);
 do
-nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpadmin.yaml -l /root/recon/$domain/subdomain/good/active_subdomain.txt -c 50  -o /root/recon/$domain/scan/nuclei/Php-My-Admin/php_admin.txt -v
+nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpadmin.yaml -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -c 50  -o /root/recon/$domain/scan/nuclei/Php-My-Admin/php_admin.txt -v
 done
 }
 Php_My_Admin
@@ -96,7 +96,7 @@ Php_My_Admin
 CloudFlare_Checker(){
 for domain in $(cat $host);
 do
-cf-check -d /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
+cf-check -d /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
 done
 }
 CloudFlare_Checker
@@ -105,10 +105,10 @@ CloudFlare_Checker
 vuln_scanner(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/my-nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/my-all.txt -v
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
-jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/my-jaeles/ -v
-jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/active_subdomain.txt -o /root/recon/$domain/scan/jaeles/ -v
+nuclei -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -t /root/templates/my-nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/my-all.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
+jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -o /root/recon/$domain/scan/my-jaeles/ -v
+jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -o /root/recon/$domain/scan/jaeles/ -v
 done
 }
 vuln_scanner
@@ -116,13 +116,13 @@ vuln_scanner
 find_urls(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt |  gauplus -t 30 | tee -a /root/recon/$domain/url/gaplus-urls.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | waybackurls | tee /root/recon/$domain/url/waybackurls.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | hakrawler | tee -a /root/recon/$domain/url/hakrawler-urls.txt
-gospider -S /root/recon/$domain/subdomain/good/active_subdomain.txt -c 10 -d 1 --other-source | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | katana -o /root/recon/$domain/url/katana.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
-cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/active_subdomain.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  |  gauplus -t 30 | tee -a /root/recon/$domain/url/gaplus-urls.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | waybackurls | tee /root/recon/$domain/url/waybackurls.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | hakrawler | tee -a /root/recon/$domain/url/hakrawler-urls.txt
+gospider -S /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -c 10 -d 1 --other-source | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | katana -o /root/recon/$domain/url/katana.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
+cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/sort-url.txt
 httpx -l /root/recon/$domain/url/sort-url.txt -o /root/recon/$domain/url/url_httpx.txt
@@ -152,7 +152,7 @@ gf sqli /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/sqli
 gf lfi /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/lfi.txt
 gf redirect /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/my-Redirect.txt
 gf aws-keys /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/aws-keys-json.txt
-gf interestingsubs /root/recon/$domain/subdomain/good/active_subdomain.txt |  tee /root/recon/$domain/gf/interestingsubs.txt
+gf interestingsubs /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  |  tee /root/recon/$domain/gf/interestingsubs.txt
 gf s3-buckets /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/s3-buckets.txt
 gf servers /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/servers.txt
 gf debug-pages /root/recon/$domain/url/valid_urls.txt |  tee /root/recon/$domain/gf/debug-pages.txt
@@ -191,7 +191,7 @@ cat /root/recon/$domain/url/valid_urls.txt | kxss | tee -a  /root/recon/$domain/
 cat /root/recon/$domain/xss/kxss_url.txt | sed 's/.*on//' | sed 's/=.*/=/' > /root/recon/$domain/xss/kxss_url_active.txt
 cat /root/recon/$domain/xss/kxss_url_active.txt | dalfox pipe | tee /root/recon/$domain/xss/kxss_dalfoxss.txt
 cat /root/recon/$domain/xss/gxss.txt | dalfox pipe | tee /root/recon/$domain/xss/gxss_dalfoxss.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | /root/OK-VPS/tools/findom-xss/./findom-xss.sh
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | /root/OK-VPS/tools/findom-xss/./findom-xss.sh
 done
 }
 Refactors_xss
@@ -242,7 +242,7 @@ Nuclei Fuzz_Endpoint
 Fuzz_Endpoint(){
 for domain in $(cat $host);
 do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 | tee -a /root/recon/$domain/dri/Endpoint_Dir.txt
+dirsearch -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -w /root/recon/$domain/url/url_endpoints.txt -i 200,301,302 | tee -a /root/recon/$domain/dri/Endpoint_Dir.txt
 done
 }
 Fuzz_Endpoint
@@ -250,7 +250,7 @@ Fuzz_Endpoint
 FUZZ_active(){
 for domain in $(cat $host);
 do
-dirsearch -l /root/recon/$domain/subdomain/good/active_subdomain.txt | tee -a /root/recon/$domain/dri/dri_activ.txt
+dirsearch -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | tee -a /root/recon/$domain/dri/dri_activ.txt
 done
 }
 FUZZ_active
@@ -258,7 +258,7 @@ FUZZ_active
 ip_sub(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/subdomain_ip.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/subdomain_ip.txt
 dirsearch -l /root/recon/$domain/subdomain/good/subdomain_ip.txt | tee -a /root/recon/$domain/dri/sub_ip_dri_activ.txt
 done
 }
@@ -267,7 +267,7 @@ ip_sub
 Nucli_fuzz(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/subdomain/good/active_subdomain.txt -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
 done
 }
 Nucli_fuzz
@@ -276,7 +276,7 @@ Get_js(){
 for domain in $(cat $host);
 do
 cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/getjs_urls.txt
-cat /root/recon/$domain/subdomain/good/active_subdomain.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/Domain_js_urls.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/Domain_js_urls.txt
 cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
 cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
 cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
@@ -297,5 +297,3 @@ Get_js
 #done
 #}
 #SecretFinder_js
-
-
