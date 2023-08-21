@@ -12,9 +12,11 @@ mkdir -p /root/recon/$domain/subdomain /root/recon/$domain/subdomain/good /root/
 subfinder -all -d $domain -o /root/recon/$domain/subdomain/subfinder.txt
 assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.txt 
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
+github-subdomains -t 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 -d $domain -o /root/recon/$domain/subdomain/github_sub.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
 amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
+#knockpy --no-http logitech.com 
 export CHAOS_KEY=8153077428be89cccb4f3f7e20f45a166c0f5565d9cb118b7c529a5d9ee5bd00
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 /root/OK-VPS/tools/Lilly/./lilly.sh -d $domain -a hLRieliNwbe2vJf8TEXo3keLG2pZcdIP | tee -a /root/recon/$domain/subdomain/lilly_shodan.txt
