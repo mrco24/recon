@@ -14,9 +14,10 @@ assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.t
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
 github-subdomains -t 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 -d $domain -o /root/recon/$domain/subdomain/github_sub.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
-amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
 amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
 shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | tee -a /root/recon/$domain/subdomain/good/shodan_ip.txt
+export CENSYS_API_ID=303b2554-31b0-4e2d-a036-c869f23bfb76
+export CENSYS_API_SECRET=sB8T2K8en7LW6GHOkKPOfEDVpdmaDj6t
 python /root/OK-VPS/tools/censys-subdomain-finder/censys-subdomain-finder.py $domain -o /root/recon/$domain/subdomain/censys_subdomain.txt
 #knockpy --no-http logitech.com 
 export CHAOS_KEY=8153077428be89cccb4f3f7e20f45a166c0f5565d9cb118b7c529a5d9ee5bd00
@@ -33,7 +34,7 @@ openssl x509 -noout -text -in <(
 openssl s_client -ign_eof 2>/dev/null <<<$'HEAD / HTTP/1.0\r\n\r' \
 -connect $domain:443 ) ) | grep -Po '((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+' | tee /root/recon/$domain/subdomain/altnamesub.txt
 shuffledns -d $domain -w $wordlist -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/shuffledns.txt
-cat /root/recon/$domain/subdomain/*.txt | uniq -u | grep $domain | tee -a /root/recon/$domain/subdomain/all_srot_sub.txt
+cat /root/recon/$domain/subdomain/*.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/all_srot_sub.txt
 
 done
 }
