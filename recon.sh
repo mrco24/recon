@@ -19,6 +19,7 @@ gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlis
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
 cat /root/recon/$domain/subdomain/good/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/ip_chack_allsub.txt
 cat /root/recon/$domain/subdomain/good/ip_chack_allsub.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/domain_ip.txt
+shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | tee -a /root/recon/$domain/subdomain/good/shodan_ip.txt
 cat /root/recon/$domain/subdomain/good/*.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
 done
 }
