@@ -282,11 +282,10 @@ cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
 cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
 cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
 cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee /root/recon/$domain/js_url/good_js_url.txt
-/root/Tools/JSScanner/./script.sh /root/recon/$domain/js_url/jshttpxurl.txt
+/root/OK-VPS/tools/JSScanner/./script.sh /root/recon/$domain/js_url/good_js_url.txt
 #relative-url-extractor https://github.com/jobertabma/relative-url-extractor
 #LinkFinder https://github.com/GerbenJavado/LinkFinder
 #Arjun https://github.com/s0md3v/Arjun
-
 done
 }
 Get_js
