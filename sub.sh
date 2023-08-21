@@ -16,6 +16,7 @@ github-subdomains -t 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 -d $domain -o /roo
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -active -d $domain -o /root/recon/$domain/subdomain/amass_sub.txt
 amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
+python /root/OK-VPS/tools/censys-subdomain-finder/censys-subdomain-finder.py $domain -o /root/recon/$domain/subdomain/censys_subdomain.txt
 #knockpy --no-http logitech.com 
 export CHAOS_KEY=8153077428be89cccb4f3f7e20f45a166c0f5565d9cb118b7c529a5d9ee5bd00
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
