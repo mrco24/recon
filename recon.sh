@@ -63,8 +63,9 @@ open_port(){
 for domain in $(cat $host);
 do
 #naabu -rate 10000 -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
-naabu -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -top-ports 1000 -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/open-port.txt
-naabu -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -p - -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/filter-all-open-port.txt
+nmap -iL /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt -T5 | tee -a /root/recon/$domain/scan/open_port_nmap.txt
+naabu -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -top-ports 1000 -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/open_port.txt
+naabu -list /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -p - -exclude-ports 80,443,21,22,25 -o /root/recon/$domain/scan/filter_all_open_port.txt
 done
 }
 open_port
