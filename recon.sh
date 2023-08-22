@@ -29,7 +29,8 @@ httpx_resolve(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt
-altdns -i /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
+#altdns -i /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
+/root/OK-VPS/tools/subbrute-77/./subbrute.py -s /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -t /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/subbrute_sub.txt -v
 cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
 cat /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
 done
