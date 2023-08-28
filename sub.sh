@@ -21,7 +21,7 @@ python /root/OK-VPS/tools/censys-subdomain-finder/censys-subdomain-finder.py $do
 #knockpy --no-http logitech.com 
 export CHAOS_KEY=8153077428be89cccb4f3f7e20f45a166c0f5565d9cb118b7c529a5d9ee5bd00
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
-/root/OK-VPS/tools/Lilly/./lilly.sh -d $domain -a hLRieliNwbe2vJf8TEXo3keLG2pZcdIP | tee -a /root/recon/$domain/subdomain/lilly_shodan.txt
+/root/OK-VPS/tools/Lilly/./lilly.sh -d $domain -a F3WxribTVzWz8He9zrtNrGwGl7jDepty | tee -a /root/recon/$domain/subdomain/lilly_shodan.txt
 curl --insecure --silent "http://web.archive.org/cdx/search/cdx?url=*.$domain/*&output=text&fl=original&collapse=urlkey" | sed -e 's_https*://__' -e "s/\/.*//" -e 's/:.*//' -e 's/^www\.//' | sed "/@/d" | sed -e 's/\.$//' | sort -u | tee /root/recon/$domain/subdomain/web.archive.txt
 curl -s "https://crt.sh/?q=%25.$domain&output=json" | jq -r '.[].name_value' | sed 's/\*\.//g' | sort -u | tee /root/recon/$domain/subdomain/crtsub.txt
 curl -s "https://riddler.io/search/exportcsv?q=pld:$domain" | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | sort -u | tee /root/recon/$domain/subdomain/riddlersub.txt
