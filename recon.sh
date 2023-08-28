@@ -138,7 +138,9 @@ cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | waybackurl
 cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | hakrawler | tee -a /root/recon/$domain/url/hakrawler-urls.txt
 gospider -S /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -c 10 -d 1 --other-source | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
 cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | katana -o /root/recon/$domain/url/katana.txt
-cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
+#cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
+paramspider -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt -s
+cat /root/OK-VPS/tools/ParamSpider/results/*.txt > /root/OK-VPS/tools/ParamSpider/results/ParamSpider_all.txt && cp -r /root/OK-VPS/tools/ParamSpider/results/ParamSpider_all.txt /root/recon/$domain/url 
 cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
 cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/sort-url.txt
