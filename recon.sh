@@ -4,61 +4,6 @@ host=$1
 wordlist="/root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt"
 resolver="/root/wordlist/resolvers.txt"
 
-resolving_domains(){
-for domain in $(cat $host);
-do
-httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 40 -o /root/recon/$domain/subdomain/good/good_sub.txt
-done
-}
-resolving_domains
-
-Gen_subdomain(){
-for domain in $(cat $host);
-do
-gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
-cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
-cat /root/recon/$domain/subdomain/good/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/ip_chack_allsub.txt
-cat /root/recon/$domain/subdomain/good/ip_chack_allsub.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/domain_ip.txt
-shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | tee -a /root/recon/$domain/subdomain/good/shodan_ip.txt
-cat /root/recon/$domain/subdomain/good/*.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
-httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/httpx_sub.txt
-cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt
-done
-}
-Gen_subdomain
-
-sub_brutforche(){
-for domain in $(cat $host);
-do
-cp /root/recon/brut.sh /root/recon/$domain/subdomain/good/fainal/
-cd /root/recon/$domain/subdomain/good/fainal
-./brut.sh http_domain_for_brut.txt
-done
-}
-sub_brutforche
-
-httpx_resolve(){
-for domain in $(cat $host);
-do
-#altdns -i /root/recon/$domain/subdomain/good/puredns/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
-#/root/OK-VPS/tools/subbrute-77/./subbrute.py -s /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -t /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/subbrute_sub.txt -v
-rm -r fainal/http_domain_for_brut.txt
-cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
-httpx -l /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/king_httpx_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/king_httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
-done
-}
-httpx_resolve
-
-interesting_subs(){
-for domain in $(cat $host);
-do
-gf interestingsubs /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | tee /root/recon/$domain/subdomain/good/interestingsubs.txt 
-done
-}
-interesting_subs 
 
 nrich_cve(){
 for domain in $(cat $host);
