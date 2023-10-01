@@ -32,7 +32,7 @@ N;s/^.*\n//;:a;s/^\( *\)\(.*\), /\1\2\n\1/;ta;p;q; }' < <(
 openssl x509 -noout -text -in <(
 openssl s_client -ign_eof 2>/dev/null <<<$'HEAD / HTTP/1.0\r\n\r' \
 -connect $domain:443 ) ) | grep -Po '((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+' | tee /root/recon/$domain/subdomain/altnamesub.txt
-shuffledns -d $domain -w $wordlist -r /root/wordlist/resolvers.txt -o /root/recon/$domain/subdomain/shuffledns.txt
+puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/subdomains-top1million-5000.txt $domain -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/puredns_sub.txt
 cat /root/recon/$domain/subdomain/*.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/all_srot_sub.txt
 
 done
