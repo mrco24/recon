@@ -7,7 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 domain_enum(){
 for domain in $(cat $host);
 do
-mkdir -p /root/recon/$domain/subdomain /root/recon/$domain/subdomain/good /root/recon/$domain/subdomain/good/fainal /root/recon/$domain/Subomain-Takeover /root/recon/$domain/Subomain-Screenshots /root/recon/$domain/Special_subdomain /root/recon/$domain/Special_subdomain/scan /root/recon/$domain/scan  /root/recon/$domain/scan/my-jaeles /root/recon/$domain/scan/jaeles /root/recon/$domain/scan/jaeles/my-url /root/recon/$domain/scan/jaeles/url /root/recon/$domain/dri  /root/recon/$domain/scan/nuclei/Php-My-Admin /root/recon/$domain/scan/nuclei /root/recon/$domain/scan/new-nuclei /root/recon/$domain/url /root/recon/$domain/Secret-api /root/recon/$domain/gf /root/recon/$domain/xss /root/recon/$domain/sql /root/recon/$domain/js_url /root/recon/$domain/git_dork /root/recon/$domain/SQL
+mkdir -p /root/recon/$domain/subdomain /root/recon/$domain/subdomain/good /root/recon/$domain/subdomain/good/fainal /root/recon/$domain/subdomain/good/fainal/best /root/recon/$domain/Subomain-Takeover /root/recon/$domain/Subomain-Screenshots /root/recon/$domain/Special_subdomain /root/recon/$domain/Special_subdomain/scan /root/recon/$domain/scan  /root/recon/$domain/scan/my-jaeles /root/recon/$domain/scan/jaeles /root/recon/$domain/scan/jaeles/my-url /root/recon/$domain/scan/jaeles/url /root/recon/$domain/dri  /root/recon/$domain/scan/nuclei/Php-My-Admin /root/recon/$domain/scan/nuclei /root/recon/$domain/scan/new-nuclei /root/recon/$domain/url /root/recon/$domain/Secret-api /root/recon/$domain/gf /root/recon/$domain/xss /root/recon/$domain/sql /root/recon/$domain/js_url /root/recon/$domain/git_dork /root/recon/$domain/SQL
 
 subfinder -all -d $domain -o /root/recon/$domain/subdomain/subfinder.txt
 assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.txt 
@@ -100,16 +100,42 @@ do
 #rm -r fainal/http_domain_for_brut.txt
 cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
 cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
-httpx -l /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/king_httpx_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/king_httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt 
+httpx -l /root/recon/$domain/subdomain/good/fainal/best/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/king_httpx_sub.txt
+cat /root/recon/$domain/subdomain/good/fainal/best/king_httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt 
 done
 }
 httpx_resolve
 
+wordlist_Making(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt | tok | anew | tee -a  /root/wordlist/my_wordlist.txt
+done
+}
+wordlist_Making
+
+sub_brutforche_2(){
+for domain in $(cat $host);
+do
+puredns bruteforce /root/wordlist/my_wordlist.txt -d /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/best/my_wordlist_purdns_sub.txt
+done
+}
+sub_brutforche_2
+
+httpx_resolve_2(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/subdomain/good/fainal/best/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt
+httpx -l /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt
+cat /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt 
+done
+}
+httpx_resolve_2
+
 interesting_subs(){
 for domain in $(cat $host);
 do
-gf interestingsubs /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | tee /root/recon/$domain/subdomain/good/interestingsubs.txt 
+gf interestingsubs /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | tee /root/recon/$domain/subdomain/good/fainal/best/interestingsubs.txt 
 done
 }
 interesting_subs 
