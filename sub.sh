@@ -88,7 +88,7 @@ shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | 
 cat /root/recon/$domain/subdomain/good/*.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
 httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/httpx_sub.txt
 cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt
+cat /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/fainal/root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt
 done
 }
 Gen_subdomain
@@ -96,9 +96,7 @@ Gen_subdomain
 sub_brutforche(){
 for domain in $(cat $host);
 do
-cp /root/recon/brut.sh /root/recon/$domain/subdomain/good/fainal/
-cd /root/recon/$domain/subdomain/good/fainal
-./brut.sh http_domain_for_brut.txt
+puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -d /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/purdns_sub.txt
 done
 }
 sub_brutforche
@@ -108,7 +106,7 @@ for domain in $(cat $host);
 do
 #altdns -i /root/recon/$domain/subdomain/good/puredns/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
 #/root/OK-VPS/tools/subbrute-77/./subbrute.py -s /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -t /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/subbrute_sub.txt -v
-rm -r fainal/http_domain_for_brut.txt
+#rm -r fainal/http_domain_for_brut.txt
 cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
 cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
 httpx -l /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/king_httpx_sub.txt
