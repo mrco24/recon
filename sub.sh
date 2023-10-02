@@ -48,15 +48,6 @@ done
 }
 resolving_domains
 
-#brut(){
-#for domain in $(cat $host);
-#do
-#cp brut.sh /root/recon/$domain/subdomain/good
-#cd /root/recon/$domain/subdomain/good
-#./brut.sh passive_resolving_live_sub.txt
-#done
-#}
-#brut
 
 Recursive(){
 for domain in $(cat /root/recon/$host);
