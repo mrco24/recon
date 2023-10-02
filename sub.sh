@@ -43,9 +43,7 @@ domain_enum
 resolving_domains(){
 for domain in $(cat $host);
 do
-
 httpx -l /root/recon/$domain/subdomain/all_srot_sub.txt -threads 50 -o /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
-
 done
 }
 resolving_domains
@@ -71,13 +69,13 @@ done
 }
 Recursive
 
-resolving_domains(){
+resolving_domains_1(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 40 -o /root/recon/$domain/subdomain/good/good_sub.txt
 done
 }
-resolving_domains
+resolving_domains_1
 
 Gen_subdomain(){
 for domain in $(cat $host);
