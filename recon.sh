@@ -8,6 +8,7 @@ resolving_domains_tow(){
 for domain in $(cat $host);
 do
 httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 40 -o /root/recon/$domain/subdomain/good/good_sub.txt
+cat /root/recon/$domain/subdomain/good/good_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/good_sub_remov_https.txt
 done
 }
 resolving_domains_tow
@@ -15,7 +16,7 @@ resolving_domains_tow
 Gen_subdomain(){
 for domain in $(cat $host);
 do
-gotator -sub /root/recon/$domain/subdomain/good/good_sub.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
+gotator -sub /root/recon/$domain/subdomain/good/good_sub_remov_https.txt -perm /root/wordlist/mrco24-wordlist/gen-sub-wordlist.txt -depth 1 | tee -a /root/recon/$domain/subdomain/good/Gen_subdomain.txt
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
 cat /root/recon/$domain/subdomain/good/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/ip_chack_allsub.txt
 cat /root/recon/$domain/subdomain/good/ip_chack_allsub.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/domain_ip.txt
