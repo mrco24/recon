@@ -149,6 +149,7 @@ vuln_scanner(){
 for domain in $(cat $host);
 do
 nuclei -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -t /root/templates/my-nuclei-templates/ -c 50 -o /root/recon/$domain/scan/nuclei/my-all.txt -v
+nuclei -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -t /root/templates/fuzzing-templates/ -c 50 -o /root/recon/$domain/scan/fuzzing.txt -v
 nuclei -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -t /root/nuclei-templates/ -c 50 -o /root/recon/$domain/scan/new-nuclei/All.txt -v
 jaeles scan -c 50 -s /root/templates/ghsec-jaeles-signatures -U /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt/root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -o /root/recon/$domain/scan/my-jaeles/ -v
 jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -o /root/recon/$domain/scan/jaeles/ -v
