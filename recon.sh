@@ -269,13 +269,6 @@ done
 }
 dir-traversal
 
-Nuclei_Redirect(){
-for domain in $(cat $host);
-do
-nuclei -l /root/recon/$domain/gf/my-Redirect.txt -t /root/templates/fuzzing-templates/ -c 60  -o /root/recon/$domain/scan/nuclei/Redirect.txt -v
-done
-}
-Nuclei Fuzz_Endpoint
 
 Nuclei_Redirect(){
 for domain in $(cat $host);
