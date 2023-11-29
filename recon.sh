@@ -105,6 +105,7 @@ Xray
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
+cp -r /root/recon/$domain/subdomain/good/all_srot_sub.txt 
 nuclei -l /root/recon/$domain/subdomain/good/take_ge_subdomain.txt -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/subdomain-takeover/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
 done
 }
