@@ -248,7 +248,6 @@ done
 }
 SQL
 
-
 Refactors_xss(){
 for domain in $(cat $host);
 do
@@ -261,6 +260,26 @@ cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | /root/OK-V
 done
 }
 Refactors_xss
+
+Open_Redirect(){
+for domain in $(cat $host);
+do
+python3  /root/OK-VPS/tools/Oralyzer/oralyzer.py -l /root/recon/$domain/url/valid_urls.txt | tee -a /root/recon/$domain/scan/redirect.txt
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_redirect.txt -v
+done
+}
+Open_Redirect
+
+dir-traversal(){
+for domain in $(cat $host);
+do
+nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/dir-traversal.yaml -c 60  -o /root/recon/$domain/scan/nuclei/dir-traversal.txt -v
+jaeles scan -c 50 -s /root/templates/best/lfi-header-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header -v
+jaeles scan -c 50 -s /root/templates/best/lfi-param-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-param -v
+jaeles scan -c 50 -s /root/templates/best/lfi-header-windows-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header-windows -v
+done
+}
+dir-traversal
 
 Bilnd_xss(){
 for domain in $(cat $host);
@@ -277,26 +296,6 @@ cat /root/recon/$domain/url/valid_urls.txt | /root/OK-VPS/tools/findom-xss/./fin
 done
 }
 Dom_xss
-
-dir-traversal(){
-for domain in $(cat $host);
-do
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/dir-traversal.yaml -c 60  -o /root/recon/$domain/scan/nuclei/dir-traversal.txt -v
-jaeles scan -c 50 -s /root/templates/best/lfi-header-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header -v
-jaeles scan -c 50 -s /root/templates/best/lfi-param-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-param -v
-jaeles scan -c 50 -s /root/templates/best/lfi-header-windows-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header-windows -v
-done
-}
-dir-traversal
-
-
-Nuclei_Redirect(){
-for domain in $(cat $host);
-do
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_fuzzing-templates__scan.txt -v
-done
-}
-Nuclei Fuzz_Endpoint
 
 Fuzz_Endpoint(){
 for domain in $(cat $host);
