@@ -93,6 +93,15 @@ done
 }
 nrich_cve 
 
+Xray(){
+for sub in $(cat  /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt);
+do
+cd /root/OK-VPS/tools/xray
+./xray_linux_amd64 ws --basic-crawler $sub --plugins xss,sqldet,xxe,ssrf,cmd-injection,path-traversal --ho Vun.html
+done
+}
+Xray
+
 Subdomai_takeover(){
 for domain in $(cat $host);
 do
