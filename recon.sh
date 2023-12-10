@@ -255,7 +255,6 @@ cat /root/recon/$domain/url/valid_urls.txt | kxss | tee -a  /root/recon/$domain/
 cat /root/recon/$domain/xss/kxss_url.txt | sed 's/.*on//' | sed 's/=.*/=/' > /root/recon/$domain/xss/kxss_url_active.txt
 cat /root/recon/$domain/xss/kxss_url_active.txt | dalfox pipe | tee /root/recon/$domain/xss/kxss_dalfoxss.txt
 cat /root/recon/$domain/xss/gxss.txt | dalfox pipe | tee /root/recon/$domain/xss/gxss_dalfoxss.txt
-cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | /root/OK-VPS/tools/findom-xss/./findom-xss.sh
 done
 }
 Refactors_xss
@@ -288,13 +287,37 @@ done
 }
 Bilnd_xss
 
+
+Get_js(){
+for domain in $(cat $host);
+do
+cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/getjs_urls.txt
+cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/Domain_js_urls.txt
+cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
+cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
+cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
+cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee /root/recon/$domain/js_url/good_js_url.txt
+#relative-url-extractor https://github.com/jobertabma/relative-url-extractor
+#LinkFinder https://github.com/GerbenJavado/LinkFinder
+done
+}
+Get_js
+
 Dom_xss(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/url/valid_urls.txt | /root/OK-VPS/tools/findom-xss/./findom-xss.sh | tee -a /root/recon/$domain/xss/Dom_xss.txt
+cat /root/recon/$domain/js_url/good_js_url.txt | /root/OK-VPS/tools/findom-xss/./findom-xss.sh | tee -a /root/recon/$domain/xss/Dom_xss.txt
 done
 }
 Dom_xss
+
+SecretFinder_js(){
+for url in $(cat /root/recon/$domain/js_url/good_js_url.txt);
+do
+python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli | tee -a /root/recon/$domain/js_url/js_SecretFinder.txt; done
+done
+}
+SecretFinder_js
 
 Fuzz_Endpoint(){
 for domain in $(cat $host);
@@ -321,33 +344,3 @@ done
 }
 ip_sub
 
-Nucli_fuzz(){
-for domain in $(cat $host);
-do
-nuclei -l /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  -t /root/templates/fuzzing-templates/ -c 50  -o /root/recon/$domain/scan/nuclei/Domain_fuzzing-templates__scan.txt -v
-done
-}
-Nucli_fuzz
-
-Get_js(){
-for domain in $(cat $host);
-do
-cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/getjs_urls.txt
-cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/Domain_js_urls.txt
-cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
-cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
-cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
-cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee /root/recon/$domain/js_url/good_js_url.txt
-#relative-url-extractor https://github.com/jobertabma/relative-url-extractor
-#LinkFinder https://github.com/GerbenJavado/LinkFinder
-done
-}
-Get_js
-
-SecretFinder_js(){
-for url in $(cat /root/recon/$domain/js_url/good_js_url.txt);
-do
-python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli | tee -a /root/recon/$domain/js_url/js_SecretFinder.txt; done
-done
-}
-SecretFinder_js
