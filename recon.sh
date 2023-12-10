@@ -338,17 +338,16 @@ cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
 cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
 cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
 cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee /root/recon/$domain/js_url/good_js_url.txt
-/root/OK-VPS/tools/JSScanner/./script.sh /root/recon/$domain/js_url/good_js_url.txt
 #relative-url-extractor https://github.com/jobertabma/relative-url-extractor
 #LinkFinder https://github.com/GerbenJavado/LinkFinder
 done
 }
 Get_js
 
-#SecretFinder_js(){
-#for domain in $(cat $host);
-#do
-#cat /root/recon/$domain/js_url/good_js_url.txt | while read url; do python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli >> /root/recon/$domain/js_url/js_SecretFinder.txt; done
-#done
-#}
-#SecretFinder_js
+SecretFinder_js(){
+for url in $(cat /root/recon/$domain/js_url/good_js_url.txt);
+do
+python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli | tee -a /root/recon/$domain/js_url/js_SecretFinder.txt; done
+done
+}
+SecretFinder_js
