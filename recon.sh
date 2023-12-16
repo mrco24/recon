@@ -178,6 +178,14 @@ done
 }
 vuln_scanner
 
+waymore(){
+for b in $(cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt);
+do
+waymore -i $b -f -xav -xcc -xus -mode U -oU /root/recon/$domain/waymore_url.txt
+done
+}
+waymore
+
 find_urls(){
 for domain in $(cat $host);
 do
