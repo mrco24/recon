@@ -239,8 +239,9 @@ gf_patterns
 SQL(){
 for domain in $(cat $host);
 do
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/error-based-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/error-based-sql-injection.txt -v
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/SQLInjection_ERROR.yaml -c 100  -o /root/recon/$domain/sql/SQLInjection_ERROR.txt -v
+mrco24-blaind_sql -f url.txt -o /root/recon/$domain/sql/error-based-sql-injection.txt
+#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/error-based-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/error-based-sql-injection.txt -v
+#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/SQLInjection_ERROR.yaml -c 100  -o /root/recon/$domain/sql/SQLInjection_ERROR.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-time-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-time-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-sql-injection.txt -v
 sqlmap -m /root/recon/$domain/url/valid_urls.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sqlmap_sql_url.txt
@@ -273,9 +274,7 @@ dir-traversal(){
 for domain in $(cat $host);
 do
 sed 's/=.*$/=/' /root/recon/$domain/gf/my_lfi.txt | anew | tee -a /root/recon/$domain/gf/rady_lfi.txt
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/dir-traversal.yaml -c 60  -o /root/recon/$domain/scan/nuclei/dir-traversal.txt -v
-jaeles scan -c 50 -s /root/templates/best/lfi-header-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header -v
-jaeles scan -c 50 -s /root/templates/best/lfi-header-windows-01.yaml -U /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/scan/my-jaeles/lfi-header-windows -v
+mrco24-lfi -f /root/recon/$domain/gf/rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/lfi.txt
 done
 }
 dir-traversal
@@ -315,7 +314,7 @@ Dom_xss
 SecretFinder_js(){
 for url in $(cat /root/recon/$domain/js_url/good_js_url.txt);
 do
-python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli | tee -a /root/recon/$domain/js_url/js_SecretFinder.txt; done
+python3 /root/OK-VPS/tools/SecretFinder/SecretFinder.py -i $url -o cli | tee -a /root/recon/$domain/js_url/js_SecretFinder.txt
 done
 }
 SecretFinder_js
