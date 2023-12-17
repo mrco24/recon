@@ -10,7 +10,7 @@ do
     amass enum -passive -d $sub | anew  passive_recursive.txt
     findomain --quiet -t $sub | anew passive_recursive.txt
     cat *.txt > R_allsub.txt
-    cat R_allsub.txt | uniq -u > Recursive_finalsub_all.txt
+    cat R_allsub.txt | anew Recursive_finalsub_all.txt
 
 done
 
