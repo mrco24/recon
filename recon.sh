@@ -272,7 +272,7 @@ Open_Redirect(){
 for domain in $(cat $host);
 do
 python3  /root/OK-VPS/tools/Oralyzer/oralyzer.py -l /root/recon/$domain/url/valid_urls.txt | tee -a /root/recon/$domain/scan/redirect.txt
-nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_redirect.txt -v
+#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_redirect.txt -v
 done
 }
 Open_Redirect
@@ -282,6 +282,7 @@ for domain in $(cat $host);
 do
 sed 's/=.*$/=/' /root/recon/$domain/gf/my_lfi.txt | anew | tee -a /root/recon/$domain/gf/rady_lfi.txt
 mrco24-lfi -f /root/recon/$domain/gf/rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/lfi.txt
+mrco24-lfi -f /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/all_url_lfi.txt
 done
 }
 dir-traversal
@@ -303,7 +304,7 @@ cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | getJS --co
 cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
 cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
 cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
-cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee /root/recon/$domain/js_url/good_js_url.txt
+cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee -a /root/recon/$domain/js_url/good_js_url.txt
 #relative-url-extractor https://github.com/jobertabma/relative-url-extractor
 #LinkFinder https://github.com/GerbenJavado/LinkFinder
 done
