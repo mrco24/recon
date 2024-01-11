@@ -192,7 +192,7 @@ cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  |  gauplu
 cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | waybackurls | tee /root/recon/$domain/url/waybackurls.txt
 cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | hakrawler | tee -a /root/recon/$domain/url/hakrawler-urls.txt
 gospider -S /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -c 10 -d 1 --other-source | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/gospider-url.txt
-cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | katana -o /root/recon/$domain/url/katana.txt
+cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | katana -d 5 -o /root/recon/$domain/url/katana.txt
 #cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
 paramspider -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt -s
 cat /root/OK-VPS/tools/ParamSpider/results/*.txt > /root/OK-VPS/tools/ParamSpider/results/ParamSpider_all.txt && cp -r /root/OK-VPS/tools/ParamSpider/results/ParamSpider_all.txt /root/recon/$domain/url 
@@ -220,6 +220,7 @@ Url_endpoints
 gf_patterns(){
 for domain in $(cat $host);
 do
+cat  /root/recon/$domain/url/valid_urls.txt | grep "=" | tee -a  /root/recon/$domain/gf/all_prem.txt
 gf xss /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/xss.txt
 gf my-lfi /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/my-lfi.txt
 gf my-lfi /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/sqli.txt
@@ -246,11 +247,12 @@ gf_patterns
 SQL(){
 for domain in $(cat $host);
 do
-mrco24-blaind_sql -f url.txt -o /root/recon/$domain/sql/error-based-sql-injection.txt
-#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/error-based-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/error-based-sql-injection.txt -v
-#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/SQLInjection_ERROR.yaml -c 100  -o /root/recon/$domain/sql/SQLInjection_ERROR.txt -v
+mrco24-error-sql -f /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/sql/error-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-time-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-time-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-sql-injection.txt -v
+#mrco24-blaind_sql -f url.txt -o /root/recon/$domain/sql/error-based-sql-injection.txt
+#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/error-based-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/error-based-sql-injection.txt -v
+#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/SQLInjection_ERROR.yaml -c 100  -o /root/recon/$domain/sql/SQLInjection_ERROR.txt -v
 sqlmap -m /root/recon/$domain/url/valid_urls.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sqlmap_sql_url.txt
 done
 }
@@ -271,7 +273,7 @@ Refactors_xss
 Open_Redirect(){
 for domain in $(cat $host);
 do
-python3  /root/OK-VPS/tools/Oralyzer/oralyzer.py -l /root/recon/$domain/url/valid_urls.txt | tee -a /root/recon/$domain/scan/redirect.txt
+open-redirect -l /root/recon/$domain/gf/all_prem.txt -p /root/wordlist/mrco24-wordlist/open-redirect.txt -o /root/recon/$domain/scan/redirect.txt -t 20 -v
 #nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_redirect.txt -v
 done
 }
@@ -280,7 +282,7 @@ Open_Redirect
 dir-traversal(){
 for domain in $(cat $host);
 do
-sed 's/=.*$/=/' /root/recon/$domain/gf/my_lfi.txt | anew | tee -a /root/recon/$domain/gf/rady_lfi.txt
+sed 's/=.*$/=/' /root/recon/$domain/gf/all_prem.txt | anew | tee -a /root/recon/$domain/gf/rady_lfi.txt
 mrco24-lfi -f /root/recon/$domain/gf/rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/lfi.txt
 mrco24-lfi -f /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/all_url_lfi.txt
 done
