@@ -329,6 +329,14 @@ done
 }
 SecretFinder_js
 
+Js_Api(){
+for url in $(cat /root/recon/$domain/js_url/good_js_url.txt);
+do
+cat /root/recon/$domain/js_url/good_js_url.txt | mantra | tee -a  /root/recon/$domain/js_url/js_api_key.txt
+done
+}
+Js_Api
+
 Fuzz_Endpoint(){
 for domain in $(cat $host);
 do
