@@ -265,9 +265,9 @@ for domain in $(cat $host);
 do
 cat /root/recon/$domain/url/valid_urls.txt | Gxss -o /root/recon/$domain/xss/gxss.txt
 cat /root/recon/$domain/url/valid_urls.txt | kxss | tee -a  /root/recon/$domain/xss/kxss_url.txt
-cat /root/recon/$domain/xss/kxss_url.txt | sed 's/.*on//' | sed 's/=.*/=/' > /root/recon/$domain/xss/kxss_url_active.txt
-cat /root/recon/$domain/xss/kxss_url_active.txt | dalfox pipe | tee /root/recon/$domain/xss/kxss_dalfoxss.txt
-cat /root/recon/$domain/xss/gxss.txt | dalfox pipe | tee /root/recon/$domain/xss/gxss_dalfoxss.txt
+cat /root/recon/$domain/xss/kxss_url.txt | awk -F' ' '{print $NF}' | tee -a /root/recon/$domain/xss/kxss_url_active.txt
+dalfox file /root/recon/$domain/xss/kxss_url_active.txt --custom-payload /root/wordlist/mrco24-wordlist/Xss-Payload.txt -o /root/recon/$domain/xss/kxss_dalfox.txt
+dalfox file /root/recon/$domain/xss/gxss.txt --custom-payload /root/wordlist/mrco24-wordlist/Xss-Payload.txt -o /root/recon/$domain/xss/Gxss_dalfox.txt
 done
 }
 Refactors_xss
