@@ -199,11 +199,11 @@ cat /root/OK-VPS/tools/ParamSpider/results/*.txt > /root/OK-VPS/tools/ParamSpide
 #cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt
 web-archive -l  /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt -o /root/recon/$domain/url/webarchive.txt
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
-cat /root/recon/$domain/url/all-url.txt | uro | grep $domain | tee /root/recon/$domain/url/sort-url.txt
+cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/sort-url.txt
 httpx -l /root/recon/$domain/url/sort-url.txt -o /root/recon/$domain/url/url_httpx.txt
 arjun -i /root/recon/$domain/url/url_httpx.txt -t 20 -oT /root/recon/$domain/url/arjun.txt
 cat /root/recon/$domain/url/*.txt | tee -a /root/recon/$domain/url/2all-url.txt
-cat /root/recon/$domain/url/2all-url.txt | uro | tee -a /root/recon/$domain/url/final-url.txt
+cat /root/recon/$domain/url/2all-url.txt | sort --unique | tee -a /root/recon/$domain/url/final-url.txt
 cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/exe_remove_urls.txt
 done
 }
