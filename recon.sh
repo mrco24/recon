@@ -27,33 +27,33 @@ done
 }
 Gen_subdomain
 
-sub_brutforche(){
-for domain in $(cat $host);
-do
-puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -d /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/purdns_sub.txt
-done
-}
-sub_brutforche
+#sub_brutforche(){
+#for domain in $(cat $host);
+#do
+#puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -d /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/purdns_sub.txt
+#done
+#}
+#sub_brutforche
 
-httpx_resolve(){
-for domain in $(cat $host);
-do
+#httpx_resolve(){
+#for domain in $(cat $host);
+#do
 #altdns -i /root/recon/$domain/subdomain/good/puredns/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
 #/root/OK-VPS/tools/subbrute-77/./subbrute.py -s /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -t /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/subbrute_sub.txt -v
 #rm -r fainal/http_domain_for_brut.txt
-cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
-httpx -l /root/recon/$domain/subdomain/good/fainal/best/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt
-cat root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | dnsx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
-cat /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt 
-done
-}
-httpx_resolve
+#cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
+#cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
+#httpx -l /root/recon/$domain/subdomain/good/fainal/best/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt
+#cat root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | dnsx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
+#cat /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt 
+#done
+#}
+#httpx_resolve
 
 wordlist_Making(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt | tok | anew | tee -a  /root/wordlist/my_wordlist.txt
+cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | tok | anew | tee -a  /root/wordlist/my_wordlist.txt
 done
 }
 wordlist_Making
@@ -61,7 +61,7 @@ wordlist_Making
 sub_brutforche_2(){
 for domain in $(cat $host);
 do
-puredns bruteforce /root/wordlist/my_wordlist.txt -d /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/best/my_wordlist_purdns_sub.txt
+puredns bruteforce /root/wordlist/my_wordlist.txt -d /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/best/my_wordlist_purdns_sub.txt
 done
 }
 sub_brutforche_2
@@ -69,10 +69,10 @@ sub_brutforche_2
 httpx_resolve_2(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt | dnsx -a -resp-only | tee -a /root/recon/$domain/subdomain/good/domain_ip.txt
 cat /root/recon/$domain/subdomain/good/fainal/best/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt
 httpx -l /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt
 cat /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt 
+cat root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt | dnsx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
 done
 }
 httpx_resolve_2
