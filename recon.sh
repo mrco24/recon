@@ -196,14 +196,15 @@ cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | katana 
 #cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | xargs -n 1 -I {} python3 /root/OK-VPS/tools/ParamSpider/paramspider.py --domain {} --level high  | grep -o 'https\?://[^ ]\+' > /root/recon/$domain/url/all_spiderparamters.txt
 paramspider -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt -s
 cat /root/OK-VPS/tools/ParamSpider/results/*.txt > /root/OK-VPS/tools/ParamSpider/results/ParamSpider_all.txt && cp -r /root/OK-VPS/tools/ParamSpider/results/ParamSpider_all.txt /root/recon/$domain/url 
-cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt 
+#cd /root/recon/$domain/url && ./web_archive_urls.sh /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt
+web-archive -l  /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt -o /root/recon/$domain/url/webarchive.txt
 cat /root/recon/$domain/url/*.txt > /root/recon/$domain/url/all-url.txt
-cat /root/recon/$domain/url/all-url.txt | sort --unique | grep $domain | tee /root/recon/$domain/url/sort-url.txt
+cat /root/recon/$domain/url/all-url.txt | uro | grep $domain | tee /root/recon/$domain/url/sort-url.txt
 httpx -l /root/recon/$domain/url/sort-url.txt -o /root/recon/$domain/url/url_httpx.txt
 arjun -i /root/recon/$domain/url/url_httpx.txt -t 20 -oT /root/recon/$domain/url/arjun.txt
 cat /root/recon/$domain/url/*.txt | tee -a /root/recon/$domain/url/2all-url.txt
-cat /root/recon/$domain/url/2all-url.txt | sort --unique | tee /root/recon/$domain/url/final-url.txt
-cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/valid_urls.txt
+cat /root/recon/$domain/url/2all-url.txt | uro | tee -a /root/recon/$domain/url/final-url.txt
+cat /root/recon/$domain/url/final-url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> /root/recon/$domain/url/exe_remove_urls.txt
 done
 }
 find_urls
@@ -211,6 +212,7 @@ find_urls
 Url_endpoints(){
 for domain in $(cat $host);
 do
+parameters -l /root/recon/$domain/url/final-url.txt -o /root/recon/$domain/url/valid_urls.txt
 cat /root/recon/$domain/url/final-url.txt | cut -d "/" -f4- >> /root/recon/$domain/url/url_endpoints.txt
 done
 }
