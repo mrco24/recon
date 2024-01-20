@@ -37,8 +37,8 @@ cd ..
 gf_patterns
 
 SQL(){
-mrco24-error-sql -f gf_param_url.txt -o error-sql-injection.txt -v
-mrco24-error-sql -f all_prem.txt -o all-error-sql-injection.txt -v
+mrco24-error-sql -f gf_param_url.txt -t 40  -o error-sql-injection.txt -v
+mrco24-error-sql -f all_prem.txt  -t 40  -o all-error-sql-injection.txt -v
 #nuclei -l valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-time-sql-injection.yaml -c 100  -o header-blind-time-sql-injection.txt -v
 #nuclei -l valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-sql-injection.yaml -c 100  -o header-blind-sql-injection.txt -v
 #sqlmap -m valid_urls.txt --batch --risk 3  --random-agent | tee -a sqlmap_sql_url.txt
