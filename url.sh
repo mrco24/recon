@@ -8,7 +8,6 @@ echo "$host" | gauplus | tee -a url.txt
 #cat url.txt | egrep -v "\.woff|\.ttf|\.svg|\.eot|\.png|\.jpep|\.svg|\.css|\.ico" | sed 's/:88//9;s/:443//g' | sort -u >> remove_url.txt
 cat url.txt | sort --unique | tee -a nice_url.txt
 parameters -l nice_url.txt -o all_prem.txt
-
 }
 live_url
 
