@@ -14,7 +14,8 @@ live_url
 
 gf_patterns(){
 cat all_prem.txt | grep "=" | tee -a  gf_param_url.txt
-mkdir | cd gf
+mkdir gf
+cd gf
 gf xss all_prem.txt | tee -a xss.txt
 gf my-lfi all_prem.txt | tee -a my-lfi.txt
 gf my-lfi all_prem.txt | tee -a sqli.txt
