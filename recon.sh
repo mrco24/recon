@@ -271,7 +271,9 @@ Refactors_xss
 Open_Redirect(){
 for domain in $(cat $host);
 do
-open-redirect -l /root/recon/$domain/gf/all_prem.txt -p /root/wordlist/mrco24-wordlist/open-redirect.txt -o /root/recon/$domain/scan/redirect.txt -t 20 -v
+sed 's/=.*$/=/' /root/recon/$domain/gf/all_prem.txt | tee -a /root/recon/$domain/gf/rady_open.txt
+open-redirect -l /root/recon/$domain/gf/rady_open.txt -p /root/wordlist/mrco24-wordlist/open-redirect.txt -o /root/recon/$domain/scan/redirect.txt -t 20 -v
+open-redirect -l /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/open-redirect.txt -o /root/recon/$domain/scan/redirect.txt -t 20 -v
 #nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_redirect.txt -v
 done
 }
@@ -280,7 +282,7 @@ Open_Redirect
 dir-traversal(){
 for domain in $(cat $host);
 do
-sed 's/=.*$/=/' /root/recon/$domain/gf/all_prem.txt | anew | tee -a /root/recon/$domain/gf/rady_lfi.txt
+sed 's/=.*$/=/' /root/recon/$domain/gf/all_prem.txt | tee -a /root/recon/$domain/gf/rady_lfi.txt
 mrco24-lfi -f /root/recon/$domain/gf/rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/lfi.txt
 mrco24-lfi -f /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/all_url_lfi.txt
 done
@@ -302,9 +304,7 @@ do
 cat /root/recon/$domain/url/valid_urls.txt | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/getjs_urls.txt
 cat /root/recon/$domain/subdomain/good/fainal/active_subdomain.txt  | getJS --complete | grep $domain | tee /root/recon/$domain/js_url/Domain_js_urls.txt
 cat /root/recon/$domain/js_url/*.txt > /root/recon/$domain/js_url/all_js_url.txt
-cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/fina_js_url.txt
-cat /root/recon/$domain/js_url/fina_js_url.txt | httpx -threads 150 -o /root/recon/$domain/js_url/jshttpxurl.txt
-cat /root/recon/$domain/js_url/jshttpxurl.txt | sort --unique | tee -a /root/recon/$domain/js_url/good_js_url.txt
+cat /root/recon/$domain/js_url/all_js_url.txt | sort --unique | tee /root/recon/$domain/js_url/good_js_url.txt
 #relative-url-extractor https://github.com/jobertabma/relative-url-extractor
 #LinkFinder https://github.com/GerbenJavado/LinkFinder
 done
