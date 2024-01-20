@@ -245,7 +245,7 @@ gf_patterns
 SQL(){
 for domain in $(cat $host);
 do
-mrco24-error-sql -f /root/recon/$domain/url/valid_urls.txt -o /root/recon/$domain/sql/error-sql-injection.txt -v
+mrco24-error-sql -f /root/recon/$domain/url/valid_urls.txt -t 40 -o /root/recon/$domain/sql/error-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-time-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-time-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-sql-injection.txt -v
 #mrco24-blaind_sql -f url.txt -o /root/recon/$domain/sql/error-based-sql-injection.txt
