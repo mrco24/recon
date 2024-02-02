@@ -7,7 +7,7 @@ resolver="/root/wordlist/resolvers.txt"
 resolving_domains_tow(){
 for domain in $(cat $host);
 do
-httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -threads 40 -o /root/recon/$domain/subdomain/good/good_sub.txt
+dnsx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -o /root/recon/$domain/subdomain/good/good_sub.txt
 cat /root/recon/$domain/subdomain/good/good_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/good_sub_remov_https.txt
 done
 }
@@ -20,7 +20,7 @@ gotator -sub /root/recon/$domain/subdomain/good/good_sub_remov_https.txt -perm /
 cat /root/recon/$domain/subdomain/good/Gen_subdomain.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/good/take_ge_subdomain.txt
 shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | tee -a /root/recon/$domain/subdomain/good/shodan_ip.txt
 cat /root/recon/$domain/subdomain/good/*.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
-httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/httpx_sub.txt
+dnsx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/dnsx_sub.txt
 cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt
 cat /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt
 done
@@ -70,7 +70,7 @@ httpx_resolve_2(){
 for domain in $(cat $host);
 do
 cat /root/recon/$domain/subdomain/good/fainal/best/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt
-httpx -l /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt
+dnsx -l /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt
 cat /root/recon/$domain/subdomain/good/fainal/best/best_king_httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt 
 cat root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt | dnsx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
 done
