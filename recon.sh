@@ -209,6 +209,7 @@ Url_endpoints(){
 for domain in $(cat $host);
 do
 parameters -l /root/recon/$domain/url/final-url.txt -o /root/recon/$domain/url/valid_urls.txt
+cat  /root/recon/$domain/url/valid_urls.txt | grep "=" | tee -a  /root/recon/$domain/gf/all_prem.txt
 cat /root/recon/$domain/url/final-url.txt | cut -d "/" -f4- >> /root/recon/$domain/url/url_endpoints.txt
 done
 }
@@ -218,7 +219,6 @@ Url_endpoints
 gf_patterns(){
 for domain in $(cat $host);
 do
-cat  /root/recon/$domain/url/valid_urls.txt | grep "=" | tee -a  /root/recon/$domain/gf/all_prem.txt
 gf xss /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/xss.txt
 gf my-lfi /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/my-lfi.txt
 gf my-lfi /root/recon/$domain/url/valid_urls.txt | tee /root/recon/$domain/gf/sqli.txt
@@ -242,15 +242,25 @@ done
 }
 gf_patterns
 
+dir-traversal(){
+for domain in $(cat $host);
+do
+sed 's/=.*$/=/' /root/recon/$domain/gf/all_prem.txt | tee -a /root/recon/$domain/gf/rady_lfi.txt
+mrco24-lfi -f /root/recon/$domain/gf/rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/lfi.txt
+mrco24-lfi -f /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/all_url_lfi.txt
+done
+}
+dir-traversal
+
 SQL(){
 for domain in $(cat $host);
 do
+time-sql -l /root/recon/$domain/gf/rady_lfi.txt -p  /root/wordlist/mrco24-wordlist/time-sql.txt -o /root/recon/$domain/sql/only-param-time-sql-injection.txt
+time-sql -l /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/time-sql.txt  -o /root/recon/$domain/sql/all-url-time-sql-injection.txt
 mrco24-error-sql -f /root/recon/$domain/url/valid_urls.txt -t 40 -o /root/recon/$domain/sql/error-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-time-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-time-sql-injection.txt -v
 nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/header-blind-sql-injection.txt -v
 #mrco24-blaind_sql -f url.txt -o /root/recon/$domain/sql/error-based-sql-injection.txt
-#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/error-based-sql-injection.yaml -c 100  -o /root/recon/$domain/sql/error-based-sql-injection.txt -v
-#nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/Best-Mrco24/SQLInjection_ERROR.yaml -c 100  -o /root/recon/$domain/sql/SQLInjection_ERROR.txt -v
 sqlmap -m /root/recon/$domain/url/valid_urls.txt --batch --risk 3  --random-agent | tee -a /root/recon/$domain/sql/sqlmap_sql_url.txt
 done
 }
@@ -278,16 +288,6 @@ open-redirect -l /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24
 done
 }
 Open_Redirect
-
-dir-traversal(){
-for domain in $(cat $host);
-do
-sed 's/=.*$/=/' /root/recon/$domain/gf/all_prem.txt | tee -a /root/recon/$domain/gf/rady_lfi.txt
-mrco24-lfi -f /root/recon/$domain/gf/rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/lfi.txt
-mrco24-lfi -f /root/recon/$domain/url/valid_urls.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o /root/recon/$domain/scan/all_url_lfi.txt
-done
-}
-dir-traversal
 
 Bilnd_xss(){
 for domain in $(cat $host);
