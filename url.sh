@@ -12,7 +12,7 @@ parameters -l nice_url.txt -o all_prem.txt
 live_url
 
 gf_patterns(){
-cat all_prem.txt | grep "=" | tee -a  gf_param_url.txt
+cat all_prem.txt | grep "=" | tee -a  all_param_url.txt
 mkdir gf
 cd gf
 gf xss all_prem.txt | tee -a xss.txt
@@ -37,8 +37,11 @@ cd ..
 gf_patterns
 
 SQL(){
-mrco24-error-sql -f gf_param_url.txt -t 40  -o error-sql-injection.txt -v
+sed 's/=.*$/=/' all_param_url.txt | tee -a rady-sql.txt
+mrco24-error-sql -f all_param_url.txt -t 40  -o error-sql-injection.txt -v
 mrco24-error-sql -f all_prem.txt  -t 40  -o all-error-sql-injection.txt -v
+time-sql -l rady-sql.txt -p  /root/wordlist/mrco24-wordlist/time-sql.txt -o only-param-time-sql-injection.txt
+time-sql -l all_prem.txt -p  /root/wordlist/mrco24-wordlist/time-sql.txt -o only-param-time-sql-injection.txt
 #nuclei -l valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-time-sql-injection.yaml -c 100  -o header-blind-time-sql-injection.txt -v
 #nuclei -l valid_urls.txt -t /root/templates/Best-Mrco24/header-blind-sql-injection.yaml -c 100  -o header-blind-sql-injection.txt -v
 #sqlmap -m valid_urls.txt --batch --risk 3  --random-agent | tee -a sqlmap_sql_url.txt
@@ -53,7 +56,7 @@ dalfox file kxss_url_active.txt  --custom-payload /root/wordlist/mrco24-wordlist
 Refactors_xss
 
 Open_Redirect(){
-sed 's/=.*$/=/' gf_param_url.txt | tee -a rady_open.txt
+sed 's/=.*$/=/' all_param_url.txt | tee -a rady_open.txt
 open-redirect -l rady_open.txt -p /root/wordlist/mrco24-wordlist/open-redirect.txt -o open_redirect.txt -t 20 -v
 open-redirect -l all_prem.txt -p /root/wordlist/mrco24-wordlist/open-redirect.txt -o allurl_open_redirect.txt -t 20 -v
 #nuclei -l /root/recon/$domain/url/valid_urls.txt -t /root/templates/fuzzing-templates/redirect/open-redirect.yaml -c 60  -o /root/recon/$domain/scan/nuclei/urls_redirect.txt -v
@@ -61,7 +64,7 @@ open-redirect -l all_prem.txt -p /root/wordlist/mrco24-wordlist/open-redirect.tx
 Open_Redirect
 
 dir-traversal(){
-sed 's/=.*$/=/' gf_param_url.txt | tee -a rady_lfi.txt
+sed 's/=.*$/=/' all_param_url.txt | tee -a rady_lfi.txt
 mrco24-lfi -f rady_lfi.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o lfi.txt
 mrco24-lfi -f all_prem.txt -p /root/wordlist/mrco24-wordlist/lfi_payloads.txt -t 50 -o all_url_lfi.txt
 }
