@@ -16,8 +16,8 @@ assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.t
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
 github-subdomains -t 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 -d $domain -o /root/recon/$domain/subdomain/github_sub.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
-amass enum -passive -d facebook.com | awk '{print $6}' | grep $domain | tee -a /root/recon/$domain/subdomain/amass_sub_passive.txt
-#amass enum -passive -d $domain -o /root/recon/$domain/subdomain/amass_sub_passive.txt
+amass enum -passive -d $domain | awk '{print $6}' | grep $domain | tee -a /root/recon/$domain/subdomain/amass_sub_passive.txt
+#amass enum -passive -d c -o /root/recon/$domain/subdomain/amass_sub_passive.txt
 export CENSYS_API_ID=303b2554-31b0-4e2d-a036-c869f23bfb76
 export CENSYS_API_SECRET=sB8T2K8en7LW6GHOkKPOfEDVpdmaDj6t
 python /root/OK-VPS/tools/censys-subdomain-finder/censys-subdomain-finder.py $domain -o /root/recon/$domain/subdomain/censys_subdomain.txt
