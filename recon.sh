@@ -44,7 +44,7 @@ Gen_subdomain
 #cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
 #cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
 #httpx -l /root/recon/$domain/subdomain/good/fainal/best/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt
-#cat root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | dnsx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
+#cat root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | httpx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
 #cat /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/best/sub_brutforche_2_file.txt 
 #done
 #}
