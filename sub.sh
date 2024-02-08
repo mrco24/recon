@@ -49,7 +49,7 @@ domain_enum
 resolving_domains(){
 for domain in $(cat $host);
 do
-dnsx -l /root/recon/$domain/subdomain/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
+httpx -l /root/recon/$domain/subdomain/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt
 done
 }
 resolving_domains
