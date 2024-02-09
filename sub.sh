@@ -22,7 +22,7 @@ export CENSYS_API_ID=303b2554-31b0-4e2d-a036-c869f23bfb76
 export CENSYS_API_SECRET=sB8T2K8en7LW6GHOkKPOfEDVpdmaDj6t
 python /root/OK-VPS/tools/censys-subdomain-finder/censys-subdomain-finder.py $domain -o /root/recon/$domain/subdomain/censys_subdomain.txt
 #knockpy --no-http logitech.com 
-export CHAOS_KEY=8153077428be89cccb4f3f7e20f45a166c0f5565d9cb118b7c529a5d9ee5bd00
+export CHAOS_KEY=bc8fbae1-f602-47d5-9e89-4c59b89e4617
 chaos -d $domain -o /root/recon/$domain/subdomain/chaos_sub.txt
 python3 /root/OK-VPS/tools/ctfr/ctfr.py -d $domain -o /root/recon/$domain/subdomain/crt_sub.txt
 cero $domain | sed 's/^*.//' | grep -e "\." | sort -u | tee -a /root/recon/$domain/subdomain/cero_ssl_sub.txt
