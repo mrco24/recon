@@ -94,14 +94,6 @@ done
 }
 nrich_cve 
 
-Xray(){
-for sub in $(cat  /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt);
-do
-cd /root/OK-VPS/tools/xray
-./xray ws --basic-crawler $sub --plugins xss,sqldet,xxe,ssrf,cmd-injection,path-traversal --ho Vun.html
-done
-}
-Xray
 
 Subdomai_takeover(){
 for domain in $(cat $host);
@@ -177,6 +169,15 @@ jaeles scan -c 50 -s /root/templates/jaeles-signatures -U /root/recon/$domain/su
 done
 }
 vuln_scanner
+
+Xray(){
+for sub in $(cat  /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt);
+do
+cd /root/OK-VPS/tools/xray
+./xray ws --basic-crawler $sub --plugins xss,sqldet,xxe,ssrf,cmd-injection,path-traversal --ho Vun.html
+done
+}
+Xray
 
 waymore(){
 for b in $(cat /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt);
