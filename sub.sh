@@ -14,7 +14,7 @@ subfinder -all -d $domain -o /root/recon/$domain/subdomain/subfinder.txt
 subfinder -all -d $domain  -s securitytrails -rl 1 -t 1 -v -max-time 20 -o /root/recon/$domain/subdomain/s-subfinder.txt
 assetfinder -subs-only $domain | tee /root/recon/$domain/subdomain/assetfinder.txt 
 findomain -t $domain | tee /root/recon/$domain/subdomain/findomain.txt
-github-subdomains -t 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 -d $domain -o /root/recon/$domain/subdomain/github_sub.txt
+github-subdomains -t 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 -d $domain -o /root/recon/$domain/subdomain/github_sub.txt
 #sudomy -d $domain -o /root/recon/$domain/subdomain/sudomy.txt
 amass enum -passive -d $domain | awk '{print $6}' | grep $domain | tee -a /root/recon/$domain/subdomain/amass_sub_passive.txt
 #amass enum -passive -d c -o /root/recon/$domain/subdomain/amass_sub_passive.txt
