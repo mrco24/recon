@@ -57,7 +57,7 @@ resolving_domains_tow(){
 for domain in $(cat $host);
 do
 #httpx -l /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt -o /root/recon/$domain/subdomain/good/good_sub.txt
-cat /root/recon/$domain/subdomain/good/good_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/good_sub_remov_https.txt
+cat /root/recon/$domain/subdomain/good/passive_resolving_live_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/good_sub_remov_https.txt
 done
 }
 resolving_domains_tow
