@@ -148,9 +148,7 @@ Subdomai_takeover(){
 for domain in $(cat $host);
 do
 cp -r /root/recon/$domain/subdomain/all_srot_sub.txt /root/recon/$domain/Subomain-Takeover
-cp -r /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt /root/recon/$domain/Subomain-Takeover
-cp -r /root/recon/$domain/subdomain/good/all_srot_sub.txt /root/recon/$domain/Subomain-Takeover
-cp -r /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt /root/recon/$domain/Subomain-Takeover
+#cp -r /root/recon/$domain/subdomain/good/Recursive_finalsub_all.txt /root/recon/$domain/Subomain-Takeover
 cp -r /root/recon/$domain/subdomain/good/fainal/best/best_all_king_sub.txt /root/recon/$domain/Subomain-Takeover
 cd /root/recon/$domain/Subomain-Takeover
 cat /root/recon/$domain/Subomain-Takeover/*.txt | sort --unique | tee -a /root/recon/$domain/Subomain-Takeover/subdomain_takeover.txt
