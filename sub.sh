@@ -154,7 +154,6 @@ cd /root/recon/$domain/Subomain-Takeover
 cat /root/recon/$domain/Subomain-Takeover/*.txt | sort --unique | tee -a /root/recon/$domain/Subomain-Takeover/subdomain_takeover.txt
 subzy run --targets /root/recon/$domain/Subomain-Takeover/subdomain_takeover.txt | tee -a sub_poc.txt
 nuclei -l /root/recon/$domain/Subomain-Takeover/subdomain_takeover.txt -t /root/templates/my-nuclei-templates/subdomain-takeover_detect-all-takeovers.yaml -c 100 -o /root/recon/$domain/Subomain-Takeover/poc.txt -v
-cd
 done
 }
 Subdomai_takeover
@@ -191,7 +190,7 @@ open_port
 Php_My_Admin(){
 for domain in $(cat $host);
 do
-nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpadmin.yaml -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -c 50  -o /root/recon/$domain/scan/nuclei/Php-My-Admin/php_admin.txt -v
+nuclei -t /root/templates/my-nuclei-templates/My-Nuclei-Templates/php-my-admin/phpadmin.yaml -l /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  -c 50  -o /root/recon/$domain/scan/nuclei/php_admin.txt -v
 done
 }
 Php_My_Admin
@@ -199,7 +198,7 @@ Php_My_Admin
 CloudFlare_Checker(){
 for domain in $(cat $host);
 do
-cf-check -d /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | tee -a /root/recon/$domain/subdomain/good/cloudflare_check.txt
+cf-check -d /root/recon/$domain/subdomain/good/fainal/best/all_active_sub.txt  | tee -a /root/recon/$domain/subdomain/good/fainal/best/cloudflare_check.txt
 done
 }
 CloudFlare_Checker
