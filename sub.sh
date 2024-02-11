@@ -90,7 +90,7 @@ Gen_subdomain
 #altdns -i /root/recon/$domain/subdomain/good/puredns/httpx_sub.txt -o data_output -w $wordlist -r -s /root/recon/$domain/subdomain/good/fainal/altdns_sub.txt
 #/root/OK-VPS/tools/subbrute-77/./subbrute.py -s /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt -t /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/subbrute_sub.txt -v
 #rm -r fainal/http_domain_for_brut.txt
-#cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/fainal/analyticsrelationships_sub.txt
+#cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | analyticsrelationships | tee -a /root/recon/$domain/subdomain/good/fainal/httpx_sub.txt -o /root/recon/$domain/subdomain/good/fainal/analyticsrelationships_sub.txt
 #cat /root/recon/$domain/subdomain/good/fainal/*.txt |sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/all_king_sub.txt
 #httpx -l /root/recon/$domain/subdomain/good/fainal/best/all_king_sub.txt -o /root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt
 #cat root/recon/$domain/subdomain/good/fainal/best/king_httpx_good_sub.txt | httpx -a -resp-only | tee -a root/recon/$domain/subdomain/good/fainal/best/domain_ip.txt
