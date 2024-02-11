@@ -38,7 +38,7 @@ N;s/^.*\n//;:a;s/^\( *\)\(.*\), /\1\2\n\1/;ta;p;q; }' < <(
 openssl x509 -noout -text -in <(
 openssl s_client -ign_eof 2>/dev/null <<<$'HEAD / HTTP/1.0\r\n\r' \
 -connect $domain:443 ) ) | grep -Po '((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+' | tee /root/recon/$domain/subdomain/altnamesub.txt
-puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/subdomains-top1million-5000.txt $domain -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/puredns_sub.txt
+puredns bruteforce /root/wordlist/SecLists/Discovery/DNS/dns-Jhaddix.txt $domain -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/puredns_sub.txt
 cat /root/recon/$domain/subdomain/*.txt | sort --unique | grep $domain | tee -a /root/recon/$domain/subdomain/all_srot_sub.txt
 
 done
@@ -71,7 +71,7 @@ shodan search  ssl.cert.subject.CN:"$domain.*" 200 | awk '{print $1}' | httpx | 
 cat /root/recon/$domain/subdomain/good/*.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/all_srot_sub.txt
 httpx -l /root/recon/$domain/subdomain/good/all_srot_sub.txt -o /root/recon/$domain/subdomain/good/httpx_sub.txt
 cat /root/recon/$domain/subdomain/good/httpx_sub.txt | sort --unique | tee -a /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt
-cat /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt
+cat /root/recon/$domain/subdomain/good/fainal/wihtout_duplicat_for_brut_sub.txt | sed 's#\(https\?://\)##' | tee -a /root/recon/$domain/subdomain/good/fainal/best/http_domain_for_brut.txt
 done
 }
 Gen_subdomain
@@ -102,7 +102,7 @@ Gen_subdomain
 wordlist_Making(){
 for domain in $(cat $host);
 do
-cat /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt | tok | anew | tee -a  /root/wordlist/my_wordlist.txt
+cat /root/recon/$domain/subdomain/good/fainal/best/http_domain_for_brut.txt | tok | anew | tee -a  /root/wordlist/my_wordlist.txt
 done
 }
 wordlist_Making
@@ -110,7 +110,7 @@ wordlist_Making
 sub_brutforche_2(){
 for domain in $(cat $host);
 do
-puredns bruteforce /root/wordlist/my_wordlist.txt -d /root/recon/$domain/subdomain/good/fainal/http_domain_for_brut.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/best/my_wordlist_purdns_sub.txt
+puredns bruteforce /root/wordlist/my_wordlist.txt -d /root/recon/$domain/subdomain/good/fainal/best/http_domain_for_brut.txt -r /root/wordlist/resolvers.txt | tee -a /root/recon/$domain/subdomain/good/fainal/best/my_wordlist_purdns_sub.txt
 done
 }
 sub_brutforche_2
